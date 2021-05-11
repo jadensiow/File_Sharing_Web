@@ -19,6 +19,9 @@ git pull
 docker ps # COPY Container ID
 docker stop <container-id>
 
+# Push settings.py
+# Export environment variables from .env file
+
 # Build Docker image
 docker build -t file-sharing-backend ./backend
 docker run -d -p 8000:8000 file-sharing-backend
