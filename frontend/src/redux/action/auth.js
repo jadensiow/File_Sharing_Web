@@ -7,6 +7,8 @@ import {
   toastrSuccess,
 } from "../../functions/toastrs";
 
+import backend_api from "../apis/backend";
+
 // Register User
 export const register = ({
   firstName,
@@ -30,7 +32,7 @@ export const register = ({
   });
 
   try {
-    const res = await axios.post("/api/users/register/", body, config);
+    const res = await backend_api.post("/api/users/register/", body, config);
 
     if (res && res.data?.success) {
       dispatch({
