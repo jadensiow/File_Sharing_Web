@@ -35,3 +35,7 @@ docker run -d -p 8000:8000 --env-file=./backend/.env file-sharing-backend
 
 # 3. Set-up Frontend
 # https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
+# Update API URL in package.json file
+npm install
+npm run build
+aws s3 sync ./frontend/build s3://file-sharing-webapp/
