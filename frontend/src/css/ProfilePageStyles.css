@@ -1,0 +1,29 @@
+.profile-card-edit-icon {
+	position: absolute;
+	top: 15px;
+	right: 30px;
+}
+
+.profile-card-edit-icon:hover {
+	cursor: pointer;
+}
+
+.profile-edit-icon {
+	background-color: rgba(0, 0, 0, 0.55);
+	width: 25px;
+	height: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 5%;
+	right: 5%;
+}
+
+.profile-edit-icon:hover {
+	cursor: pointer;
+}
+
+.profile-card input {
+	color: #3fd2f7;
+}

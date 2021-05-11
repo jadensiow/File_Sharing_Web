@@ -1,0 +1,181 @@
+.showcase {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  min-height: 100vh;
+  padding: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: aliceblue;
+  transition: 0.5s;
+  z-index: 2;
+}
+
+.showcase video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  background: #9abfcf;
+}
+.loginBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 710px;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.loginBox h2 {
+  margin: 0;
+  padding: 0 0 26px;
+  color: #ff8c00;
+  text-align: center;
+  z-index: 100;
+}
+.loginBox p {
+  margin: 0;
+  padding: 0 0 10px;
+  color: #ff8c00;
+  text-align: center;
+  z-index: 100;
+}
+
+.loginBox input {
+  width: 100%;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  z-index: 100;
+}
+
+.loginBox button {
+  border: none;
+  outline: none;
+  height: 40px;
+  width: 50%;
+  color: #eee;
+  font-size: 16px;
+  background-color: #ff8c00;
+  cursor: pointer;
+  border-radius: 20px;
+  margin: 12px 0 18px;
+  z-index: 100;
+}
+.loginBox button :hover {
+  background-color: #ff9719;
+  color: #fff;
+}
+
+.loginBox a {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+}
+::placeholder {
+  color: rgba(250, 250, 250, 0.5);
+}
+div.backBtn {
+  width: 100px;
+  left: 100px;
+  top: 100px;
+  background-color: #f4f4f4;
+  transition: all 0.4s ease;
+  position: fixed;
+  cursor: pointer;
+  z-index: 100;
+}
+
+span.line {
+  bottom: auto;
+  right: auto;
+  top: auto;
+  left: auto;
+  background-color: #333;
+  border-radius: 10px;
+  width: 100%;
+  left: 0px;
+  height: 2px;
+  display: block;
+  position: absolute;
+  transition: width 0.2s ease 0.1s, left 0.2s ease, transform 0.2s ease 0.3s,
+    background-color 0.2s ease;
+  z-index: 100;
+}
+
+span.tLine {
+  top: 0px;
+  z-index: 100;
+}
+
+span.mLine {
+  top: 13px;
+  opacity: 0;
+  z-index: 100;
+}
+
+span.bLine {
+  top: 26px;
+  z-index: 100;
+}
+
+.label {
+  position: absolute;
+  left: 0px;
+  top: 5px;
+  width: 100%;
+  text-align: center;
+  transition: all 0.4s ease;
+  font-size: 1em;
+  z-index: 100;
+}
+
+div.backBtn:hover a.label {
+  left: 25px;
+  z-index: 100;
+}
+
+div.backBtn:hover span.line {
+  left: -10px;
+  height: 5px;
+  background-color: #f76060;
+  z-index: 100;
+}
+
+div.backBtn:hover span.tLine {
+  width: 25px;
+  transform: rotate(-45deg);
+  left: -15px;
+  top: 6px;
+  z-index: 100;
+}
+
+div.backBtn:hover span.mLine {
+  opacity: 1;
+  width: 30px;
+  z-index: 100;
+}
+
+div.backBtn:hover span.bLine {
+  width: 25px;
+  transform: rotate(45deg);
+  left: -15px;
+  top: 20px;
+  z-index: 100;
+}

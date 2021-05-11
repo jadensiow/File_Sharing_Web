@@ -1,0 +1,21 @@
+.header {
+	background-color: grey;
+}
+
+.videos {
+	margin-bottom: 40px;
+	width: 270px;
+	margin-left: 80px;
+}
+.allVideos {
+	flex: 0.8;
+	padding: 40px 20px;
+
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.videos img {
+	height: 180px;
+	width: 300px;
+}
