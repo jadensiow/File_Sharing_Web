@@ -2,8 +2,11 @@
 
 # From Scratch
 # Set-up New EC2 instance - Console > EC2 > Instances > Launch Instance >> Ubuntu 18 > Security groups (allow ssh and TCP (8000) access to your IP address)
-# SSH into EC2 instance - ssh -i <path-to-key> ubuntu@<ip-address>
+# SSH into EC2 instance - ssh -i <path-to-key> ubuntu@<ip-address> - Download https://www.putty.org/
 # Install docker - https://docs.docker.com/engine/install/ubuntu/
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo chmod 666 /var/run/docker.sock
 # Clone Github Repository
 
 # Updating EC2 instance
@@ -12,9 +15,13 @@ ssh -i <path-to-key> ubuntu@<ip-address>
 cd File_Sharing_Web
 git pull
 
-# Build Docker image 
+# Stop Docker container
+docker ps # COPY Container ID
+docker stop <container-id>
+
+# Build Docker image
 docker build -t file-sharing-backend ./backend
-docker run -p 8000:8000 file-sharing-backend -d
+docker run -d -p 8000:8000 file-sharing-backend
 
 
 # 2. Start RDS database if not running

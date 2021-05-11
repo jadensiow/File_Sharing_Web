@@ -1,5 +1,6 @@
 new-env/
 .vscode
 __pycache__
-backend/youtubedjango/settings.py
+# backend/youtubedjango/settings.py
 migrations
+*.env
