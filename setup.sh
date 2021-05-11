@@ -24,7 +24,7 @@ docker stop <container-id>
 
 # Build Docker image
 docker build -t file-sharing-backend ./backend
-docker run -d -p 8000:8000 file-sharing-backend
+docker run -d -p 8000:8000 --env-file=./backend/.env file-sharing-backend
 
 
 # 2. Start RDS database if not running
