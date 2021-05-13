@@ -38,5 +38,5 @@ docker run -d -p 8000:8000 --env-file=./backend/.env file-sharing-backend
 # Update API URL in package.json file
 npm install
 npm run build
-
+aws s3 sync ./frontend/build s3://file-sharing-webapp/
 
