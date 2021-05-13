@@ -1,5 +1,3 @@
-// https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-in
-
 import React, { useState, useEffect } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +5,8 @@ import { login } from "../redux/action/auth";
 import Videos from "../functions/Videos";
 import { Link } from "react-router-dom";
 import "../css/login.css";
+import { motion } from "framer-motion";
+import { loginRouteTransition } from "../functions/routeAnimation";
 
 const Login = () => {
   useEffect(() => {
@@ -44,42 +44,50 @@ const Login = () => {
 
   return (
     <div>
-      <div className="backBtn">
-        <span className="line tLine"></span>
-        <span className="line mLine"></span>
-        <span onClick={handleClick} href="/" className="label">
-          Back
-        </span>
-        <span className="line bLine"></span>
-      </div>
-      <div className="showcase">
-        <Videos />
-      </div>
-      <div id="loginBox">
-        <h2>Login</h2>
-        <form>
-          <p>Username</p>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={(e) => onChange(e)}
-            value={username}
-          />
-          <p>Password</p>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={(e) => onChange(e)}
-            value={password}
-          />
-          <button onClick={(e) => onSubmit(e)}>Sign in</button>
+      <motion.div
+        variants={loginRouteTransition}
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        className="outer-div"
+      >
+        <div className="backBtn">
+          <span className="line tLine"></span>
+          <span className="line mLine"></span>
+          <span onClick={handleClick} href="/" className="label">
+            Back
+          </span>
+          <span className="line bLine"></span>
+        </div>
+        <div className="showcase">
+          <Videos />
+        </div>
+        <div id="loginBox">
+          <h2>Login</h2>
+          <form>
+            <p>Username</p>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={(e) => onChange(e)}
+              value={username}
+            />
+            <p>Password</p>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={(e) => onChange(e)}
+              value={password}
+            />
+            <button onClick={(e) => onSubmit(e)}>Sign in</button>
 
-          <br></br>
-          <Link to={"/register"}>Don't have an account? Sign Up Now!</Link>
-        </form>
-      </div>
+            <br></br>
+            <Link to={"/register"}>Don't have an account? Sign Up Now!</Link>
+          </form>
+        </div>
+      </motion.div>
     </div>
   );
 };

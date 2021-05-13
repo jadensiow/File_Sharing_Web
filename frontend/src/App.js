@@ -8,6 +8,7 @@ import AuthToken from "./functions/AuthToken";
 import ReduxToastr from "react-redux-toastr";
 import routes from "./router";
 import Navbar from "./components/Navbar";
+import { AnimatePresence } from "framer-motion";
 
 if (localStorage.token) {
   AuthToken(localStorage.token);
@@ -32,17 +33,18 @@ function App() {
         progressBar
         closeOnToastrClick
       />
-
-      <Switch>
-        {routes.map((route, index) => (
-          <Route
-            exact
-            path={route.route}
-            render={(routeProps) => <route.component {...routeProps} />}
-            key={index}
-          />
-        ))}
-      </Switch>
+      <AnimatePresence>
+        <Switch location={location} key={location.pathname}>
+          {routes.map((route, index) => (
+            <Route
+              exact
+              path={route.route}
+              render={(routeProps) => <route.component {...routeProps} />}
+              key={index}
+            />
+          ))}
+        </Switch>
+      </AnimatePresence>
     </div>
   );
 }

@@ -83,7 +83,28 @@ export const watchVideoReducer = (state = {}, action) => {
         comments: newComments,
       };
     }
+    case types.COMMENT_EDITED: {
+      const newComments = state.comments.map((c) =>
+        c.id === action.payload.id ? action.payload : c
+      );
 
+      console.log("new comments = ", newComments);
+
+      return {
+        ...state,
+        comments: newComments,
+      };
+    }
+    case types.ADD_VIEW_SUCCESS: {
+      const newVideoInfo = {
+        ...state.watchVideo,
+        ...action.payload,
+      };
+      return {
+        ...state,
+        watchVideo: newVideoInfo.watchVideo,
+      };
+    }
     default:
       return state;
   }

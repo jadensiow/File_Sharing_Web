@@ -179,3 +179,9 @@ div.backBtn:hover span.bLine {
   top: 20px;
   z-index: 100;
 }
+.outer-div {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}

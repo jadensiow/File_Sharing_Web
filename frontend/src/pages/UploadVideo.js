@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { toastrError, toastrSuccess } from "../functions/toastrs";
 import { Redirect, useHistory } from "react-router-dom";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 import Dropzone from "react-dropzone";
 import axios from "axios";
+import svgs from "../img/icons/svgs";
+import { motion } from "framer-motion";
+import { uploadVidRouteTransition } from "../functions/routeAnimation";
+import "../css/watchvideopage.css";
 
 const UploadVideo = ({ match }) => {
   const [title, setTitle] = useState("");
@@ -118,88 +122,85 @@ const UploadVideo = ({ match }) => {
   };
 
   return (
-    <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}></div>
+    <motion.div
+      variants={uploadVidRouteTransition}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+      className="outer-div"
+    >
+      <div style={{ maxWidth: "700px", margin: "2rem auto" }}>
+        <div style={{ textAlign: "center", marginBottom: "2rem" }}></div>
 
-      <form>
-        <Row>
-          <h4 className="text-left">Upload Video</h4>
-        </Row>
-        <Row>
-          <Dropzone onDrop={uploadVidFile} multiple={false} maxSize={800000000}>
-            {({ getRootProps, getInputProps }) => (
-              <div
-                style={{
-                  width: "200px",
-                  height: "100px",
-                  border: "1px solid lightgray",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                {...getRootProps()}
+        <form>
+          <div className="d-flex justify-content-between">
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <h4 className="text-left">Upload Video</h4>
+              <Dropzone
+                onDrop={uploadVidFile}
+                multiple={false}
+                maxSize={800000000}
               >
-                <input {...getInputProps()} />+
+                {({ getRootProps, getInputProps }) => (
+                  <div className="dropzone-dropzone" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {svgs.uploadIcon("#2980b9", 50)}
+                  </div>
+                )}
+              </Dropzone>
+              <div className="d-flex align-items-center">
+                {attachVid ? attachVid[0].name : <p>Attach Video file</p>}
               </div>
-            )}
-          </Dropzone>
-          <div className="d-flex align-items-center">
-            {attachVid ? attachVid[0].name : <p>Attach Video file</p>}
-          </div>
-        </Row>
-        <Row>
-          <h4 className="text-left">Upload Thumbnail</h4>
-        </Row>
-        <Row>
-          <Dropzone
-            onDrop={uploadThumbnailFile}
-            multiple={false}
-            maxSize={800000000}
-          >
-            {({ getRootProps, getInputProps }) => (
-              <div
-                style={{
-                  width: "200px",
-                  height: "100px",
-                  border: "1px solid lightgray",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                {...getRootProps()}
+            </div>
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <h4 className="text-left">Upload Thumbnail</h4>
+              <Dropzone
+                onDrop={uploadThumbnailFile}
+                multiple={false}
+                maxSize={800000000}
               >
-                <input {...getInputProps()} />+
+                {({ getRootProps, getInputProps }) => (
+                  <div className="dropzone-dropzone" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    {svgs.uploadIcon("#2980b9", 50)}
+                  </div>
+                )}
+              </Dropzone>
+              <div>
+                {thumbnail ? thumbnail[0].name : <p>Attach Thumbnail file</p>}
               </div>
-            )}
-          </Dropzone>
-          <div className="d-flex align-items-center">
-            {thumbnail ? thumbnail[0].name : <p>Attach Thumbnail file</p>}
+            </div>
           </div>
-        </Row>
-        <br></br>
-        <Row className="d-flex justify-content-between align-items-center">
-          <label>Title</label>
-          <input type="text" onChange={handleChangeTitle} value={title} />
+          <div className="text-left">
+            <Form.Group>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Title"
+                value={title}
+                style={{ border: "1px solid darkgray" }}
+                onChange={handleChangeTitle}
+              />
+            </Form.Group>
 
-          <label>Description</label>
-          <input
-            type="text"
-            onChange={handleChangeDecsription}
-            value={description}
-          />
-        </Row>
-        {/* <select onChange={handleChangeOne}>
-                    {Private.map((item, index) => (
-                        <option key={index} value={item.value}>
-                        {item.label}
-                        </option>
-                    ))}
-                    </select> 
-                */}
-        <br></br>
-        <Button onClick={onSubmit}>Submit</Button>
-      </form>
-    </div>
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="4"
+                placeholder="Description"
+                value={description}
+                style={{ border: "1px solid darkgray" }}
+                onChange={handleChangeDecsription}
+              />
+            </Form.Group>
+          </div>
+
+          <br></br>
+          <Button onClick={onSubmit}>Submit</Button>
+        </form>
+      </div>
+    </motion.div>
   );
 };
 

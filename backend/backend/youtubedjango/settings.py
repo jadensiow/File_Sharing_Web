@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,8 +13,8 @@ SECRET_KEY = '(xe+3g!#+3u7hlabnxgo9exm^g319(y)@-dn!v*d=d)#60s+6t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -29,11 +28,9 @@ INSTALLED_APPS = [
     "rest_framework",
     'accounts.apps.AccountsConfig',
     'videos.apps.VideosConfig',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,26 +70,26 @@ WSGI_APPLICATION = 'youtubedjango.wsgi.application'
 # AWS_DEFUALT_ACL= None
 # DEFAULT_FILE_STORAGE='storages.backends.s3boto3.S3Boto3Storage'
 
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'youtubeuploadDB', 
-#         'USER': 'youtubeid',
-#         'PASSWORD': 'Afpire9333',
-#         'HOST': 'youtubeupload.crvo3mgapxjq.us-east-2.rds.amazonaws.com',
-#         'PORT':'5432'
+#         'NAME': 'file-host', 
+#         'USER': 'postgres',
+#         'PASSWORD': 'Afpire93',
+#         'HOST': 'mydbinstance.cmxtadb5lowk.ap-southeast-1.rds.amazonaws.com',
+#         'PORT':'5432',
 #     }
 # }
-
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'file-host', 
+        'NAME': 'youtube2', 
         'USER': 'postgres',
-        'PASSWORD': os.environ.get('POSTGRES_PW'),
-        'HOST': 'mydbinstance.cmxtadb5lowk.ap-southeast-1.rds.amazonaws.com',
-        'PORT':'5432',
+        'PASSWORD': '012093',
+        'HOST': 'localhost',
+
     }
 }
 

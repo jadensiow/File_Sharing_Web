@@ -1,3 +1,4 @@
+from django.db.models.query_utils import Q
 from backend.helpers.delete import delete_from_s3
 from django.urls import conf
 from backend.config import Config
@@ -5,7 +6,7 @@ from django.http import HttpResponse
 from django.core import serializers
 import random
 from backend.helpers.upload import upload_file
-
+import random
 import json
 from accounts.models import User
 
@@ -21,34 +22,69 @@ def home_page(request, *args, **kwargs):
         json.dumps({"message": "home page"})
     )
     
+@login_required
+def get_user_data(request, *args, **kwargs):
+    
+    user = kwargs.get('user')        
+    user_model = User.objects.filter(pk = user['id']).first()
+    
+    return HttpResponse(
+        json.dumps({
+                "success": True,
+                "profileInfo": user_model.get_dict(),
+               }),
+                
+                
+            )
+
+@login_required
+def get_user_data2(request, *args, **kwargs):
+    
+    user = kwargs.get('user')            
+    Channel_all_data = Channel.objects.all().exclude(pk = user['id']).order_by('?')[:5].only('channel_name','id')
+    print('query',Channel_all_data)
+
+
+    channel_json = serializers.serialize('json', Channel_all_data)
+
+    return HttpResponse(
+    
+            channel_json,
+            content_type="application/json"
+            )
 
 def channel_page(request, *args, **kwargs):
+
     user_id = kwargs['id']
-    print("@@@channelpage",kwargs)
 
     user_model_object = User.objects.filter(pk = user_id).first()
     
     if not user_model_object:
         return send_message(False, f"User with id {user_id} does not exist") 
 
-    obj_to_return = {}
+    
 
     channel = Channel.objects.filter(user = user_model_object).first()
+    
+    if channel:
+        obj_to_return = {}
+        obj_to_return['user_id'] = user_id
+        obj_to_return['channel_name'] = channel.channel_name
+        obj_to_return['channel_description'] = channel.channel_description
+        obj_to_return['subscribers'] = channel.subscribers
 
-    obj_to_return['channel_name'] = channel.channel_name
-    obj_to_return['channel_description'] = channel.channel_description
-    obj_to_return['subscribers'] = channel.subscribers
+        all_videos = Video.objects.filter(user = user_model_object)
 
-    all_videos = Video.objects.filter(user = user_model_object)
+        videos_list = []
 
-    videos_list = []
+        for video in all_videos:
+            v_obj = {**video.get_dict()}
 
-    for video in all_videos:
-        v_obj = {**video.get_dict()}
+            videos_list.append(v_obj)
+        obj_to_return["videos"] = videos_list
 
-        videos_list.append(v_obj)
-
-    obj_to_return["videos"] = videos_list
+    else:
+        obj_to_return = {[]}
 
     return HttpResponse(
         json.dumps(obj_to_return),
@@ -91,8 +127,7 @@ def video_upload(request, *args, **kwargs):
     if request.method == 'POST':
         user = kwargs.get('user')
         video_id = kwargs.get('videoId')
-        print("@@@videoupload",kwargs)
-        print("@@@videoupload2",args)
+
 
         user_model = User.objects.filter(pk = user['id']).first()
 
@@ -270,7 +305,7 @@ def delete_video(request, **kwargs):
 def edit_video_details(request, **kwargs):
     if request.method != 'PUT':
         return send_message(False, f"{request.method} not supported on this route")
-
+    
     body = json.loads(request.body.decode())
 
     user = kwargs.get('user')
@@ -338,6 +373,51 @@ def change_video_thumbnail(request, **kwargs):
     }))
 
     
+def search_videos_channels(request, **kwargs):
+    search_for = request.GET.get('searchFor')
+    search_query = request.GET.get('searchQuery')
+
+    if len(search_for) == 0 or len(search_query) == 0:
+        send_message(False, "Search Query cannot be empty")
+    
+    print('\n\nrequest.GET = ', search_for, search_query)
+
+    list_to_return = []
+    search_for = search_for.lower()
+
+    if search_for == 'videos':
+        videos = Video.objects.filter(
+            Q(title__icontains = search_query) |
+            Q(description__icontains = search_query)
+        )
+
+        if videos:
+            for v in videos:
+                list_to_return.append(v.get_dict())
+
+        else:
+            return send_message(False, "Sorry nothing found")
+
+    elif search_for == 'channels':
+        channels = Channel.objects.filter(
+            Q(channel_name__icontains = search_query) |
+            Q(channel_description__icontains = search_query)
+        )
+
+        if channels:
+            for c in channels:
+                list_to_return.append(c.get_dict())
+
+        else:
+            return send_message(False, "Sorry nothing found")
+
+    else:
+        return send_message(False, "Invalid Search")
+
+    return HttpResponse(json.dumps({
+        "results": list_to_return,
+        "success": True
+    }))
 
 @login_required
 def like_video(request, **kwargs):
@@ -534,6 +614,7 @@ def like_comment(request, **kwargs):
             "message": str_to_return
         }))
 
+
 @login_required
 def dislike_comment(request, **kwargs):
     if request.method == 'POST':
@@ -614,7 +695,49 @@ def delete_post_comments(request, **kwargs):
             })
         )
 
+@login_required
+def edit_post_comments(request, **kwargs):
+    if request.method != 'PUT':
+        return send_message(False, f"{request.method} not supported on this route")
+    
+    # body = (request.body.decode())
+    # print(type(body))
+    # print("@@BODY@a@", body)
+    print(f"\n\n {request.body} \n\n")
+    
+    body = json.loads(request.body.decode())
+    
+    
+    new_comment = body.get('newComment')
+    
+    if not new_comment:
+        return send_message(False, "Bad request. No comment found")
+    
+    user = kwargs.get('user')
+    comment_Id = kwargs.get('commentId')
+    user_model = User.objects.filter(pk = user['id']).first()
+    
+    # sorry again for this. keep forgetting the .first()
 
+    
+    comment_model = Comment.objects.filter(pk = comment_Id, user = user_model).first()
+
+    if not comment_model:
+        return send_message(False, "Sorry no comment found in database with that id")
+    
+    comment_model.comment = new_comment
+    
+    # print('comment',comment_model)
+
+    comment_model.save()
+
+    return HttpResponse(json.dumps({
+        "success": True,
+        "message":"Comment details edited Successfully",
+        "comment": comment_model.get_dict()
+    }))
+    
+    
 def home_page_vid(request, *args, **kwargs):
     video_all_data = Video.objects.all().order_by('-views')[:20]
         
@@ -631,7 +754,8 @@ def home_page_vid(request, *args, **kwargs):
         json.dumps(obj_to_return),
         content_type = 'application/json'
     )
-        
+
+     
 # import random
 # from videos.models import Video
 
@@ -642,8 +766,123 @@ def home_page_vid(request, *args, **kwargs):
 #                 if v.videoUrl and len(v.videoUrl) > 0:
 #                         v.views = random.randint(100, 100000)
 #                 v.save()
+@login_required
+def subscribed_to(request, *args, **kwargs):
+    if request.method == 'POST':
+        user = kwargs.get('user')
+        channel_Id=kwargs.get("channelId")
+        user_model = User.objects.filter(pk = user['id']).first()
+        
+        l = json.loads(user_model.subscribedTo)
+        
+        l.append(channel_Id)
+        user_model.subscribedTo = json.dumps(l)
+
+        user_model.save()
+        print('usermodel', user_model)
+
+    return HttpResponse(
+        json.dumps({
+            "success": True,
+            "profileInfo":user_model.get_dict()
+      
+        }), 
+        content_type="text/json-comment-filtered"
+    )
+@login_required
+def delete_subscribed_to(request, **kwargs):
+    if request.method == 'DELETE':
+
+        delete_channel_id = kwargs.get('channelId')
+        user = kwargs.get('user')
+        user_model = User.objects.filter(pk = user['id']).first()
+        sub_to = json.loads(user_model.subscribedTo)
+        idx = sub_to.index(delete_channel_id)
+        sub_to = sub_to[:idx] + sub_to[idx + 1:]
+        user_model.subscribedTo=json.dumps(sub_to)
+        user_model.save()
+        print('usermodel', user_model)
 
 
+        return HttpResponse(
+            json.dumps({
+                'success': True,
+                "profileInfo":user_model.get_dict()
+
+            })
+        )
+@login_required
+def add_sub_count(request, *args, **kwargs):
+    if request.method == 'PUT':
+        channel_Id=kwargs.get("channelId")
+        channel_model = Channel.objects.filter(pk = channel_Id).first()
+        
+        channel_model.subscribers+=1
+        channel_model.save()
+        print('usermodel', channel_model)
+ 
+    return HttpResponse(
+        json.dumps({
+            "success": True,
+            "channelInfo":channel_model.get_dict()
+      
+        }), 
+        content_type="text/json-comment-filtered"
+    )
+    
+@login_required
+def minus_sub_count(request, *args, **kwargs):
+    if request.method == 'PUT':
+        channel_Id=kwargs.get("channelId")
+        channel_model = Channel.objects.filter(pk = channel_Id).first()
+        
+        channel_model.subscribers-=1
+        channel_model.save()
+        print('usermodel', channel_model)
+ 
+    return HttpResponse(
+        json.dumps({
+            "success": True,
+            "channelInfo":channel_model.get_dict()
+      
+        }), 
+        content_type="text/json-comment-filtered"
+    )
+@login_required
+def add_view_count(request, *args, **kwargs):
+
+    if request.method != 'PUT':
+        return send_message(False, f"{request.method} not supported on this route")
+
+
+    video_Id=kwargs.get("videoId")
+    video_model = Video.objects.filter(pk = video_Id).first()
+    video_model.views+=1
+        
+    user = kwargs.get('user')
+    user_id=user['id']
+    print('user',user)
+    viewers_json = json.loads(video_model.viewers)
+    if user_id in viewers_json:
+        return send_message(False, "Not unique user")
+    viewers_json.append(user_id)
+    video_model.viewers = json.dumps(viewers_json)
+        
+
+    
+    
+
+    video_model.save()
+        
+ 
+    return HttpResponse(
+        json.dumps({
+            "success": True,
+            "watchVideo":video_model.get_dict()
+      
+        }), 
+        content_type="text/json-comment-filtered"
+    )
 def make_dummy_data(request):
     f = open('/media/pragyan/Local Disk/Python/Youtube_Clone_React_Django/backend/videos/text.txt', 'r')
     dummy_comments = f.readlines()

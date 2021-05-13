@@ -26,6 +26,15 @@ code {
 	resize: none;
 }
 
+.react-link {
+	color: black;
+	text-decoration: none;
+}
+
+.react-link:hover {
+	text-decoration: none;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
@@ -49,4 +58,19 @@ textarea:focus {
 
 .svg-delete-icon:hover {
 	fill: red;
+}
+
+.dropzone-dropzone {
+	height: 150px;
+	width: 300px;
+	background-color: #c9e7cb;
+	border: 2px dashed #27ae60;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dropzone-dropzone:hover {
+	cursor: pointer;
+	background-color: #b0f3d9;
 }

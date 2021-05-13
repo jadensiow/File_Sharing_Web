@@ -151,6 +151,18 @@ header {
 .menu ul li a:hover {
   color: #03a9f4;
 }
+.outer-div {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.outer-div {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
 
 @media (max-width: 991px) {
   .showcase,

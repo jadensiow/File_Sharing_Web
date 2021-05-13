@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "framer-motion": "^4.1.16",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -50,6 +51,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://13.213.70.201:8000/",
+  "proxy": "http://localhost:8000/",
   "secure": false
 }

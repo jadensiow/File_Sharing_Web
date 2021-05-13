@@ -6,6 +6,7 @@ import { userProfileReducer } from "./profileReducers";
 import { watchVideoReducer } from "./videoReducers";
 import { channelReducer } from "./channelReducers";
 import { homepageReducer } from "./homepagevideoReducers";
+import { subInfoReducer } from "./subInfoReducer";
 
 export default combineReducers({
   auth,
@@ -13,5 +14,6 @@ export default combineReducers({
   watchVideo: watchVideoReducer,
   channelInfo: channelReducer,
   homepageInfo: homepageReducer,
+  subInfo: subInfoReducer,
   toastr: toastrReducer,
 });

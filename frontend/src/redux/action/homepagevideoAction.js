@@ -17,3 +17,49 @@ export const getHomePageData = () => async (dispatch) => {
     console.log(err.message);
   }
 };
+export const getUserData = (token) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const { data } = await axios.get("/api/videos/userdata/", config);
+    console.log(data);
+    if (data.success) {
+      dispatch({
+        type: types.GET_USER_SUCCESS,
+        payload: data.profileInfo,
+      });
+      // uploadVideo(apiResponse, config);
+    } else {
+      toastrError("Error", data.message);
+    }
+  } catch (err) {
+    toastrError("Error");
+  }
+};
+export const getUserData2 = (token) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const { data } = await axios.get("/api/videos/userdata2/", config);
+    console.log(data);
+    if (data) {
+      dispatch({
+        type: types.GET_USER_SUCCESS2,
+        payload: data,
+      });
+      // uploadVideo(apiResponse, config);
+    } else {
+      toastrError("Error", data.message);
+    }
+  } catch (err) {
+    toastrError("Error");
+  }
+};

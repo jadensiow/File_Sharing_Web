@@ -1,7 +1,6 @@
 import os
 
 class Config:
-    #https://youtube-videoupload.s3-ap-southeast-1.amazonaws.com/johan-a6a4fca7-15e2-4b99-967d-a398104d2211-Busted.jpg
     JWT_SECRET = 'slkfsldkfjewirhwiohwfjsdf'
     JWT_HASH_ALGO = 'HS256'
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')

@@ -1,21 +1,30 @@
 .header {
-	background-color: grey;
+  background-color: grey;
 }
 
 .videos {
-	margin-bottom: 40px;
-	width: 270px;
-	margin-left: 80px;
+  margin-bottom: 40px;
+  margin-left: 40px;
+  box-shadow: 0 0 10px darkgray;
+  padding-bottom: 15px;
 }
+
+.videos:hover {
+  box-shadow: 0 0 15px black;
+}
+
 .allVideos {
-	flex: 0.8;
-	padding: 40px 20px;
-
-	display: flex;
-	flex-wrap: wrap;
+  flex: 0.8;
+  display: flex;
+  flex-wrap: wrap;
 }
-
-.videos img {
-	height: 180px;
-	width: 300px;
+.outer-div {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.videos .v-thumb {
+  height: 180px;
+  width: 300px;
 }

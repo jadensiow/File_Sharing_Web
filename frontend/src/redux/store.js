@@ -16,6 +16,7 @@ const initialState = {
   userProfile: { loading: true, userProfile: {} },
   channelInfo: { loading: true, channelInfo: {} },
   homepageInfo: { loading: true, homepageInfo: {} },
+  subInfo: { loading: true, subInfo: {} },
 };
 
 const middleWare = [thunk];

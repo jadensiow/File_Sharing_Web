@@ -107,7 +107,7 @@ def user_login(request) -> HttpResponse:
     return HttpResponse(
         json.dumps({
             'success': True,
-            'token': jw_token.decode(),
+            'token': jw_token,
             "user": user.get_dict()
         }),
         status = 200

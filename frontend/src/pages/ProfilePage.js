@@ -15,6 +15,8 @@ import { getProfileData } from "../redux/action/profileActions";
 import Loader from "../components/Loader";
 import { toastrError, toastrSuccess } from "../functions/toastrs";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { profileRouteTransition } from "../functions/routeAnimation";
 
 const ProfilePage = ({ match }) => {
   const { loading, userProfile } = useSelector((state) => state.userProfile);
@@ -115,127 +117,135 @@ const ProfilePage = ({ match }) => {
   };
 
   return (
-    <Container style={containerStyles}>
-      <Row style={{ position: "relative" }}>
-        <Image
-          src={
-            userProfile?.channelBannerUrl?.length > 0
-              ? userProfile?.channelBannerUrl
-              : defaultBanner
-          }
-          rounded
-          height="300px"
-          width="850px"
-          style={profilePicStyles}
-        />
-
-        {isAuthenticated && (
-          <div
-            className="profile-edit-icon"
-            onClick={() => onEditIconClick("channelBanner")}
-          >
-            <img src={EditIcon} />
-          </div>
-        )}
-
-        <div style={profilePicContainer}>
+    <motion.div
+      variants={profileRouteTransition}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+      className="outer-div"
+    >
+      <Container style={containerStyles}>
+        <Row style={{ position: "relative" }}>
           <Image
             src={
-              userProfile?.profilePictureUrl?.length > 0
-                ? userProfile?.profilePictureUrl
-                : defaultProfilePic
+              userProfile?.channelBannerUrl?.length > 0
+                ? userProfile?.channelBannerUrl
+                : defaultBanner
             }
             rounded
-            height="125px"
-            width="125px"
+            height="300px"
+            width="850px"
             style={profilePicStyles}
           />
 
           {isAuthenticated && (
             <div
               className="profile-edit-icon"
-              onClick={() => onEditIconClick("profilePicture")}
+              onClick={() => onEditIconClick("channelBanner")}
             >
               <img src={EditIcon} />
             </div>
           )}
 
-          {isAuthenticated && (
-            <Row className="mt-3 ml-2">
-              <Button type="button" variant="danger" className="btn-danger">
-                Subscribe
-              </Button>
-            </Row>
-          )}
-        </div>
-      </Row>
+          <div style={profilePicContainer}>
+            <Image
+              src={
+                userProfile?.profilePictureUrl?.length > 0
+                  ? userProfile?.profilePictureUrl
+                  : defaultProfilePic
+              }
+              rounded
+              height="125px"
+              width="125px"
+              style={profilePicStyles}
+            />
 
-      <Row style={{ marginTop: "-1.5rem", position: "relative" }}>
-        <Col sm={12}>
-          <div style={profileContainer}>
-            {loading ? (
-              <Loader />
-            ) : (
-              <div className="profile-card">
-                {isAuthenticated && (
-                  <div className="profile-card-edit-icon">
-                    {svgs.editIcon("black")}
-                  </div>
-                )}
-                <Form.Row>
-                  <Form.Group as={Col}>
-                    <Form.Label>FirstName</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="firstName"
-                      value={profileEdit.firstName}
-                      onChange={formValueChange}
-                    />
-                  </Form.Group>
-                  <Form.Group as={Col}>
-                    <Form.Label>LastName</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="lastName"
-                      value={profileEdit.lastName}
-                      onChange={formValueChange}
-                    />
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Row>
-                  <Form.Group as={Col}>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      value={profileEdit.username}
-                      onChange={formValueChange}
-                    />
-                  </Form.Group>
-                  <Form.Group as={Col}>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="email"
-                      value={profileEdit.email}
-                      onChange={formValueChange}
-                    />
-                  </Form.Group>
-                </Form.Row>
-
-                <Form.Row>
-                  <Form.Group as={Col}>
-                    <Form.Label>Channel Name</Form.Label>
-                    <Form.Control type="text" />
-                  </Form.Group>
-                </Form.Row>
+            {isAuthenticated && (
+              <div
+                className="profile-edit-icon"
+                onClick={() => onEditIconClick("profilePicture")}
+              >
+                <img src={EditIcon} />
               </div>
             )}
+
+            {isAuthenticated && (
+              <Row className="mt-3 ml-2">
+                <Button type="button" variant="danger" className="btn-danger">
+                  Subscribe
+                </Button>
+              </Row>
+            )}
           </div>
-        </Col>
-      </Row>
-    </Container>
+        </Row>
+
+        <Row style={{ marginTop: "-1.5rem", position: "relative" }}>
+          <Col sm={12}>
+            <div style={profileContainer}>
+              {loading ? (
+                <Loader />
+              ) : (
+                <div className="profile-card">
+                  {isAuthenticated && (
+                    <div className="profile-card-edit-icon">
+                      {svgs.editIcon("black")}
+                    </div>
+                  )}
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>FirstName</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="firstName"
+                        value={profileEdit.firstName}
+                        onChange={formValueChange}
+                      />
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                      <Form.Label>LastName</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="lastName"
+                        value={profileEdit.lastName}
+                        onChange={formValueChange}
+                      />
+                    </Form.Group>
+                  </Form.Row>
+
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>Username</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="username"
+                        value={profileEdit.username}
+                        onChange={formValueChange}
+                      />
+                    </Form.Group>
+                    <Form.Group as={Col}>
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="email"
+                        value={profileEdit.email}
+                        onChange={formValueChange}
+                      />
+                    </Form.Group>
+                  </Form.Row>
+
+                  <Form.Row>
+                    <Form.Group as={Col}>
+                      <Form.Label>Channel Name</Form.Label>
+                      <Form.Control type="text" />
+                    </Form.Group>
+                  </Form.Row>
+                </div>
+              )}
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </motion.div>
   );
 };
 

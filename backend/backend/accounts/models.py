@@ -24,8 +24,8 @@ class User(models.Model):
     likedVideos = models.TextField(default='{}') # going to be a dictionary
     likedComments = models.TextField(default='{}') # going to be a dictionary
     dislikedVideos = models.TextField(default='{}') # going to be a dictionary
-    dislikedComments = models.TextField(default='{}') # going to be a dictionary
-    
+    dislikedComments = models.TextField(default='{}') # going to be a dictionar
+    subscribedTo=models.TextField(default='[]')
     def has_liked_video(self, video_id: int) -> bool:
         liked_videos = json.loads(self.likedVideos)
         return str(video_id) in liked_videos
@@ -42,7 +42,9 @@ class User(models.Model):
         disliked_comments = json.loads(self.dislikedComments)
         return str(comment_id) in disliked_comments
 
+    
 
+     
     def get_min_dict(self):
         return {
             "id": self.id,
@@ -57,6 +59,7 @@ class User(models.Model):
             "firstName": self.firstName,
             "lastName": self.lastName,
             "email": self.email,
+            "subscribedTo":json.loads(self.subscribedTo),
             "created_on": str(self.created_on),
             "profilePictureUrl": self.profilePictureUrl,
             "channelBannerUrl": self.channelBannerUrl

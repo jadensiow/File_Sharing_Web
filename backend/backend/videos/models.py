@@ -1,5 +1,6 @@
 from accounts.models import User
 from django.db import models
+import json
 
 
 # Create your models here.
@@ -13,6 +14,7 @@ class Video(models.Model):
     views = models.IntegerField(default=0)
     videoUrl = models.URLField(max_length=300, default='')
     videoThumbnailUrl = models.URLField(max_length=300, default='')
+    viewers=models.TextField(default='[]')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def put_commas(self, property) -> str:
@@ -36,6 +38,8 @@ class Video(models.Model):
             "dislikes": self.dislikes,
             "views": self.put_commas(self.views),
             "videoUrl": self.videoUrl,
+            "viewers":json.loads(self.viewers),
+
             "videoThumbnailUrl": self.videoThumbnailUrl,
             "user": self.user.get_dict(),
         }
@@ -72,3 +76,12 @@ class Channel(models.Model):
     channel_picture = models.URLField(max_length = 300)
     subscribers = models.IntegerField(default=0, blank=False, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_dict(self): 
+        return {
+            "id": self.id,
+            "channel_name": self.channel_name,
+            "channel_description": self.channel_description,
+            "subscribers": self.subscribers,
+            "user": self.user.get_dict()
+        }
