@@ -13,8 +13,8 @@ SECRET_KEY = '(xe+3g!#+3u7hlabnxgo9exm^g319(y)@-dn!v*d=d)#60s+6t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'accounts.apps.AccountsConfig',
     'videos.apps.VideosConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -76,12 +77,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'file-host', 
         'USER': 'postgres',
-        'PASSWORD': 'Afpire93',
+        'PASSWORD': os.environ.get('POSTGRES_PW'),
         'HOST': 'mydbinstance.cmxtadb5lowk.ap-southeast-1.rds.amazonaws.com',
         'PORT':'5432',
     }
 }
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
