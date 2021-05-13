@@ -71,27 +71,27 @@ WSGI_APPLICATION = 'youtubedjango.wsgi.application'
 # DEFAULT_FILE_STORAGE='storages.backends.s3boto3.S3Boto3Storage'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'file-host', 
-#         'USER': 'postgres',
-#         'PASSWORD': 'Afpire93',
-#         'HOST': 'mydbinstance.cmxtadb5lowk.ap-southeast-1.rds.amazonaws.com',
-#         'PORT':'5432',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'youtube2', 
+        'NAME': 'file-host', 
         'USER': 'postgres',
-        'PASSWORD': '012093',
-        'HOST': 'localhost',
-
+        'PASSWORD': 'Afpire93',
+        'HOST': 'mydbinstance.cmxtadb5lowk.ap-southeast-1.rds.amazonaws.com',
+        'PORT':'5432',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'youtube2', 
+#         'USER': 'postgres',
+#         'PASSWORD': '012093',
+#         'HOST': 'localhost',
+
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
