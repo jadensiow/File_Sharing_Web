@@ -1,4 +1,4 @@
-import apiThing from "../../youtube";
+import backend_api from "../api/backend";
 
 import types from "../types";
 import {
@@ -26,7 +26,7 @@ export const register =
     });
 
     try {
-      const res = await apiThing.post("/api/users/register/", body, config);
+      const res = await backend_api.post("/api/users/register/", body, config);
 
       if (res && res.data?.success) {
         dispatch({
@@ -63,7 +63,7 @@ export const login = (username, password) => async (dispatch) => {
   const body = JSON.stringify({ username, password });
 
   try {
-    const res = await apiThing.post("/api/users/login/", body, config);
+    const res = await backend_api.post("/api/users/login/", body, config);
     if (res.data) {
       if (res.data.success) {
         toastrSuccess("Logged in Successfuly");
