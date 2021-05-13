@@ -1,5 +1,5 @@
-import axios from "axios";
-import { toastrError, toastrInfo } from "../../functions/toastrs";
+import apiurl from "../../apiurl";
+import { toastrInfo } from "../../functions/toastrs";
 import types from "../types";
 
 export const likeDislikeAction =
@@ -29,7 +29,7 @@ export const likeDislikeAction =
     };
 
     try {
-      const { data } = await axios.post(url, {}, config);
+      const { data } = await apiurl.post(url, {}, config);
 
       if (data.success) {
         toastrInfo(data.message);
@@ -52,6 +52,5 @@ export const likeDislikeAction =
       }
     } catch (err) {
       console.log(err);
-      toastrError("Error", "Sorry Something went wrong");
     }
   };

@@ -22,7 +22,9 @@ const WatchVideoPage = ({ match }) => {
   console.log(video);
 
   // video.viewers.includes(user.id) ? null : dispatch(addViews(token, video));
-
+  useEffect(() => {
+    document.title = "Watch";
+  }, []);
   useEffect(() => {
     let userId = user ? user.id : null;
 

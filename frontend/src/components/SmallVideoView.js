@@ -10,7 +10,7 @@ import { Link, withRouter } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
+import apiurl from "../apiurl";
 import { toastrError, toastrSuccess } from "../functions/toastrs";
 import {
   deleteVideoAction,
@@ -56,7 +56,7 @@ const SmallVideoView = ({ video, match, showUser }) => {
             turning this to a post request as apparently Django does not read
             any files data from a PUT request  
             */
-      const { data } = await axios.post(
+      const { data } = await apiurl.post(
         `/api/videos/${video.id}/edit/thumbnail`,
         formData,
         {
@@ -72,7 +72,7 @@ const SmallVideoView = ({ video, match, showUser }) => {
         toastrError("Error", data.message);
       }
     } catch (err) {
-      toastrError("Sorry");
+      console.log(err);
     }
     setShowEditDetailsModal(false);
   };
@@ -85,7 +85,7 @@ const SmallVideoView = ({ video, match, showUser }) => {
     };
 
     try {
-      const { data } = await axios.put(
+      const { data } = await apiurl.put(
         `/api/videos/${video.id}/edit/`,
         {
           title:
@@ -111,7 +111,7 @@ const SmallVideoView = ({ video, match, showUser }) => {
         toastrError("Error", data.message);
       }
     } catch (err) {
-      toastrError("Sorry");
+      console.log(err);
     }
     setShowEditDetailsModal(false);
   };

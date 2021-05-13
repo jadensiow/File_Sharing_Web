@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiurl from "../apiurl";
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 
@@ -12,7 +12,9 @@ import { searchRouteTransition } from "../functions/routeAnimation";
 const SearchResults = ({ location }) => {
   const [search, setSearch] = useState({ searchFor: "", searchQuery: "" });
   const [searchResults, setSearchResults] = useState([]);
-
+  useEffect(() => {
+    document.title = "Search";
+  }, []);
   const getQueryParams = () => {
     let string = location.search;
 
@@ -33,7 +35,7 @@ const SearchResults = ({ location }) => {
     getQueryParams().then(({ searchFor, searchQuery }) => {
       if (searchFor.length === 0 || searchQuery.length === 0) return;
 
-      axios
+      apiurl
         .get("/api/videos/search/", {
           params: { searchFor, searchQuery },
         })

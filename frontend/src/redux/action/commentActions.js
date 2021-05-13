@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiurl from "../../apiurl";
 import { toastrError, toastrSuccess } from "../../functions/toastrs";
 import types from "../types";
 
@@ -11,7 +11,7 @@ export const postCommentAction =
     };
 
     try {
-      const { data } = await axios.post(
+      const { data } = await apiurl.post(
         `/api/videos/${videoId}/comments/`,
         { comment: commentText },
         config
@@ -39,7 +39,7 @@ export const deleteCommentAction =
     };
 
     try {
-      const { data } = await axios.delete(
+      const { data } = await apiurl.delete(
         `/api/videos/comments/${commentId}/`,
         config
       );

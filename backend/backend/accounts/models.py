@@ -26,6 +26,8 @@ class User(models.Model):
     dislikedVideos = models.TextField(default='{}') # going to be a dictionary
     dislikedComments = models.TextField(default='{}') # going to be a dictionar
     subscribedTo=models.TextField(default='[]')
+
+    
     def has_liked_video(self, video_id: int) -> bool:
         liked_videos = json.loads(self.likedVideos)
         return str(video_id) in liked_videos

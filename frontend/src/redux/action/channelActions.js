@@ -1,10 +1,10 @@
-import axios from "axios";
+import apiurl from "../../apiurl";
 import { toastrError, toastrSuccess } from "../../functions/toastrs";
 import types from "../types";
 
 export const getChannelData = (userId) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/videos/${userId}/channel/`);
+    const { data } = await apiurl.get(`/api/videos/${userId}/channel/`);
     setTimeout(() => {
       dispatch({
         type: types.CHANNEL_DATA_SUCCESS,
@@ -26,7 +26,7 @@ export const deleteVideoAction = (token, videoId) => async (dispatch) => {
   };
 
   try {
-    const { data } = await axios.delete(
+    const { data } = await apiurl.delete(
       `/api/videos/${videoId}/delete/`,
       config
     );
@@ -41,7 +41,7 @@ export const deleteVideoAction = (token, videoId) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    toastrError("Sorry");
+    console.log(err);
   }
 };
 
@@ -58,7 +58,7 @@ export const addSubCount = (token, channelInfo) => async (dispatch) => {
     },
   };
   try {
-    const { data } = await axios.put(
+    const { data } = await apiurl.put(
       `/api/videos/addsubcount/${channelInfo.user_id}/`,
       {},
       config
@@ -73,7 +73,7 @@ export const addSubCount = (token, channelInfo) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    toastrError("Sorry");
+    console.log(err);
   }
 };
 export const minusSubCount = (token, channelInfo) => async (dispatch) => {
@@ -83,7 +83,7 @@ export const minusSubCount = (token, channelInfo) => async (dispatch) => {
     },
   };
   try {
-    const { data } = await axios.put(
+    const { data } = await apiurl.put(
       `/api/videos/minussubcount/${channelInfo.user_id}/`,
       {},
       config
@@ -98,7 +98,7 @@ export const minusSubCount = (token, channelInfo) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    toastrError("Sorry");
+    console.log(err);
   }
 };
 export const addViews = (token, video) => async (dispatch) => {
@@ -108,7 +108,7 @@ export const addViews = (token, video) => async (dispatch) => {
     },
   };
   try {
-    const { data } = await axios.put(
+    const { data } = await apiurl.put(
       `/api/videos/addviews/${video.id}/`,
       {},
       config

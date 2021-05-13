@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toastrError, toastrSuccess } from "../functions/toastrs";
 import { Redirect, useHistory } from "react-router-dom";
@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import Dropzone from "react-dropzone";
-import axios from "axios";
+import apiurl from "../apiurl";
 import svgs from "../img/icons/svgs";
 import { motion } from "framer-motion";
 import { uploadVidRouteTransition } from "../functions/routeAnimation";
@@ -23,6 +23,9 @@ const UploadVideo = ({ match }) => {
   const { user } = useSelector((state) => state.auth);
 
   const { channelInfo } = useSelector((state) => state.channelInfo);
+  useEffect(() => {
+    document.title = "Upload";
+  }, []);
 
   console.log(channelInfo);
   const history = useHistory();
@@ -60,7 +63,7 @@ const UploadVideo = ({ match }) => {
     try {
       // Request made to the backend api
       // Send formData object
-      const response = await axios.post(
+      const response = await apiurl.post(
         `/api/videos/${videoId}/upload/`,
         formDataVid,
         config
@@ -94,7 +97,7 @@ const UploadVideo = ({ match }) => {
     };
 
     try {
-      const apiResponse = await axios.post(
+      const apiResponse = await apiurl.post(
         "/api/videos/uploadTitle/",
         body,
         config

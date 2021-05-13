@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiurl from "../../apiurl";
 import { toastrError } from "../../functions/toastrs";
 import types from "../types";
 
@@ -8,7 +8,7 @@ export const fetchVideoById = (videoId, userId) => async (dispatch) => {
       type: types.WATCH_VIDEO_FETCH_REQUEST,
     });
 
-    const { data } = await axios.get(`/api/videos/watch/${videoId}`, {
+    const { data } = await apiurl.get(`/api/videos/watch/${videoId}`, {
       params: { userId },
     });
 

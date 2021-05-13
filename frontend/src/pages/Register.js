@@ -19,7 +19,7 @@ const Register = () => {
   useEffect(() => {
     document.title = "Sign Up";
   }, []);
-
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const [registration, setRegistration] = useState({
     firstName: "",
@@ -30,7 +30,9 @@ const Register = () => {
     cfmPassword: "",
   });
   let history = useHistory();
-
+  if (isAuthenticated) {
+    return <Redirect to="/login" />;
+  }
   const handleClick = () => {
     history.push("/");
   };
@@ -48,87 +50,82 @@ const Register = () => {
       // get setAlert from actions which is store in the redux store
       toastrError("Registration failed, password do not match", "");
     } else {
-      dispatch(register({ firstName, lastName, username, email, password }));
+      await dispatch(
+        register({ firstName, lastName, username, email, password })
+      );
+      history.push("/login");
     }
   };
 
   return (
     <div>
-      <motion.div
-        variants={registerRouteTransition}
-        initial="hidden"
-        animate="show"
-        exit="exit"
-        className="outer-div"
-      >
-        <div className="backBtn">
-          <span className="line tLine"></span>
-          <span className="line mLine"></span>
-          <span onClick={handleClick} className="label">
-            Back
-          </span>
-          <span className="line bLine"></span>
-        </div>
-        <div className="showcase">
-          <Videos />
-        </div>
-        <div className="loginBox">
-          <h2>Sign Up</h2>
-          <form>
-            <p>First Name</p>
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              onChange={(e) => onChange(e)}
-              value={firstName}
-            />
-            <p>Last Name</p>
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              onChange={(e) => onChange(e)}
-              value={lastName}
-            />
-            <p>Username</p>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              onChange={(e) => onChange(e)}
-              value={username}
-            />
-            <p>Email</p>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={(e) => onChange(e)}
-              value={email}
-            />
-            <p>Password</p>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={(e) => onChange(e)}
-              value={password}
-            />
-            <p>Confirm Password</p>
-            <input
-              type="password"
-              name="cfmPassword"
-              placeholder="Confirm password"
-              onChange={(e) => onChange(e)}
-              value={cfmPassword}
-            />
-            <button onClick={(e) => onSubmit(e)}>Sign up</button>
-            <br></br>
-            <a href="/login">Already have an account? Sign in</a>
-          </form>
-        </div>
-      </motion.div>
+      <div className="backBtn">
+        <span className="line tLine"></span>
+        <span className="line mLine"></span>
+        <span onClick={handleClick} className="label">
+          Back
+        </span>
+        <span className="line bLine"></span>
+      </div>
+      <div className="showcase">
+        <Videos />
+      </div>
+      <div className="loginBox">
+        <h2>Sign Up</h2>
+        <form>
+          <p>First Name</p>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            onChange={(e) => onChange(e)}
+            value={firstName}
+          />
+          <p>Last Name</p>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            onChange={(e) => onChange(e)}
+            value={lastName}
+          />
+          <p>Username</p>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={(e) => onChange(e)}
+            value={username}
+          />
+          <p>Email</p>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={(e) => onChange(e)}
+            value={email}
+          />
+          <p>Password</p>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={(e) => onChange(e)}
+            value={password}
+          />
+          <p>Confirm Password</p>
+          <input
+            type="password"
+            name="cfmPassword"
+            placeholder="Confirm password"
+            onChange={(e) => onChange(e)}
+            value={cfmPassword}
+          />
+          <button onClick={(e) => onSubmit(e)}>Sign up</button>
+          <br></br>
+          <a href="/login">Already have an account? Sign in</a>
+        </form>
+      </div>
     </div>
   );
 };

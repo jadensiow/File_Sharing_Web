@@ -27,15 +27,21 @@ def get_user_data(request, *args, **kwargs):
     
     user = kwargs.get('user')        
     user_model = User.objects.filter(pk = user['id']).first()
-    
+    print("@@",user_model.subscribedTo)
+    sub_chnl = []
+
+    for userId in json.loads(user_model.subscribedTo):
+        sub_chnl.append(
+            Channel.objects.filter(user = userId).first().get_dict()
+        )
+
+
     return HttpResponse(
         json.dumps({
-                "success": True,
-                "profileInfo": user_model.get_dict(),
-               }),
-                
-                
-            )
+            "success": True,
+            "sub_chnl": sub_chnl,
+            }),
+    )
 
 @login_required
 def get_user_data2(request, *args, **kwargs):
@@ -766,6 +772,7 @@ def home_page_vid(request, *args, **kwargs):
 #                 if v.videoUrl and len(v.videoUrl) > 0:
 #                         v.views = random.randint(100, 100000)
 #                 v.save()
+
 @login_required
 def subscribed_to(request, *args, **kwargs):
     if request.method == 'POST':
@@ -789,6 +796,7 @@ def subscribed_to(request, *args, **kwargs):
         }), 
         content_type="text/json-comment-filtered"
     )
+
 @login_required
 def delete_subscribed_to(request, **kwargs):
     if request.method == 'DELETE':
@@ -848,6 +856,7 @@ def minus_sub_count(request, *args, **kwargs):
         }), 
         content_type="text/json-comment-filtered"
     )
+
 @login_required
 def add_view_count(request, *args, **kwargs):
 
@@ -863,8 +872,7 @@ def add_view_count(request, *args, **kwargs):
     user_id=user['id']
     print('user',user)
     viewers_json = json.loads(video_model.viewers)
-    if user_id in viewers_json:
-        return send_message(False, "Not unique user")
+
     viewers_json.append(user_id)
     video_model.viewers = json.dumps(viewers_json)
         
@@ -883,6 +891,8 @@ def add_view_count(request, *args, **kwargs):
         }), 
         content_type="text/json-comment-filtered"
     )
+
+
 def make_dummy_data(request):
     f = open('/media/pragyan/Local Disk/Python/Youtube_Clone_React_Django/backend/videos/text.txt', 'r')
     dummy_comments = f.readlines()

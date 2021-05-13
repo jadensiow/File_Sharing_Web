@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import defaultBanner from "../img/defaultChannelBanner.jpg";
-import defaultProfilePic from "../img/defaultProfilePicture.jpg";
+import ChannelBanner from "../components/ChannelBanner";
+import ProfilePic from "../components/ProfilePic";
+
 import svgs from "../img/icons/svgs";
 import EditIcon from "../img/icons/Edit.svg";
 
-import { Col, Container, Image, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 
 import "../css/ProfilePageStyles.css";
 import { getProfileData } from "../redux/action/profileActions";
 import Loader from "../components/Loader";
-import { toastrError, toastrSuccess } from "../functions/toastrs";
-import axios from "axios";
+import {
+  toastrError,
+  toastrSuccess,
+  toastrWarning,
+} from "../functions/toastrs";
+import apiurl from "../apiurl";
 import { motion } from "framer-motion";
 import { profileRouteTransition } from "../functions/routeAnimation";
 
+import { editProfileAction } from "../redux/action/profileActions";
+
 const ProfilePage = ({ match }) => {
   const { loading, userProfile } = useSelector((state) => state.userProfile);
-  const { token, isAuthenticated } = useSelector((state) => state.auth);
-  console.log(userProfile);
-  const [profileEdit, setProfileEdit] = useState({
-    firstName: userProfile?.firstName || "",
-    lastName: userProfile?.lastName || "",
-    username: userProfile?.username || "",
-    email: userProfile?.email || "",
-  });
+  const { token, isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const [editing, setEditing] = useState(false);
+
+  const [profileEdit, setProfileEdit] = useState({});
 
   const profileContainer = {
     borderRadius: "0.5rem",
@@ -42,11 +45,6 @@ const ProfilePage = ({ match }) => {
     left: "5%",
   };
 
-  const profilePicStyles = {
-    objectFit: "cover",
-    borderRadius: "0.5rem",
-  };
-
   const containerStyles = {
     maxWidth: "850px",
     margin: "2rem auto",
@@ -57,6 +55,18 @@ const ProfilePage = ({ match }) => {
   useEffect(() => {
     dispatch(getProfileData(match.params.userId));
   }, []);
+  useEffect(() => {
+    document.title = "Profile";
+  }, []);
+  useEffect(() => {
+    setProfileEdit({
+      firstName: userProfile?.firstName || "",
+      lastName: userProfile?.lastName || "",
+      username: userProfile?.username || "",
+      email: userProfile?.email || "",
+    });
+    setEditing(false);
+  }, [userProfile]);
 
   const onEditIconClick = (typeOfPicture) => {
     const input = document.createElement("input");
@@ -90,7 +100,7 @@ const ProfilePage = ({ match }) => {
       try {
         // Request made to the backend api
         // Send formData object
-        const response = await axios.post(
+        const response = await apiurl.post(
           `/api/users/upload/profilepicture/?pictureType=${typeOfPicture}`,
           formData,
           config
@@ -116,136 +126,151 @@ const ProfilePage = ({ match }) => {
     setProfileEdit((pe) => ({ ...pe, [name]: e.target.value }));
   };
 
+  const profileEdited = () => {
+    let toReturn = false;
+
+    Object.keys(profileEdit).forEach((key) => {
+      if (profileEdit[key].trim() !== userProfile[key].trim()) {
+        toReturn = true;
+        return;
+      }
+    });
+
+    return toReturn;
+  };
+
+  const sendEditProfileRequest = () => {
+    console.log(profileEdited());
+    if (!profileEdited()) {
+      toastrWarning("No edit done");
+      return;
+    }
+
+    dispatch(editProfileAction(token, user.id, profileEdit));
+  };
+
   return (
-    <motion.div
-      variants={profileRouteTransition}
-      initial="hidden"
-      animate="show"
-      exit="exit"
-      className="outer-div"
-    >
-      <Container style={containerStyles}>
-        <Row style={{ position: "relative" }}>
-          <Image
-            src={
-              userProfile?.channelBannerUrl?.length > 0
-                ? userProfile?.channelBannerUrl
-                : defaultBanner
-            }
-            rounded
-            height="300px"
-            width="850px"
-            style={profilePicStyles}
+    <Container style={containerStyles}>
+      <Row style={{ position: "relative" }}>
+        <ChannelBanner
+          src={userProfile?.channelBannerUrl}
+          height="300px"
+          width="850px"
+        />
+
+        {isAuthenticated && (
+          <div
+            className="profile-edit-icon"
+            onClick={() => onEditIconClick("channelBanner")}
+          >
+            <img src={EditIcon} />
+          </div>
+        )}
+
+        <div style={profilePicContainer}>
+          <ProfilePic
+            src={userProfile?.profilePictureUrl}
+            height="125px"
+            width="125px"
+            borderRadius="0.5rem"
           />
 
           {isAuthenticated && (
             <div
               className="profile-edit-icon"
-              onClick={() => onEditIconClick("channelBanner")}
+              onClick={() => onEditIconClick("profilePicture")}
             >
               <img src={EditIcon} />
             </div>
           )}
+        </div>
+      </Row>
 
-          <div style={profilePicContainer}>
-            <Image
-              src={
-                userProfile?.profilePictureUrl?.length > 0
-                  ? userProfile?.profilePictureUrl
-                  : defaultProfilePic
-              }
-              rounded
-              height="125px"
-              width="125px"
-              style={profilePicStyles}
-            />
-
-            {isAuthenticated && (
-              <div
-                className="profile-edit-icon"
-                onClick={() => onEditIconClick("profilePicture")}
-              >
-                <img src={EditIcon} />
-              </div>
-            )}
-
-            {isAuthenticated && (
-              <Row className="mt-3 ml-2">
-                <Button type="button" variant="danger" className="btn-danger">
-                  Subscribe
-                </Button>
-              </Row>
-            )}
-          </div>
-        </Row>
-
-        <Row style={{ marginTop: "-1.5rem", position: "relative" }}>
-          <Col sm={12}>
-            <div style={profileContainer}>
-              {loading ? (
-                <Loader />
-              ) : (
-                <div className="profile-card">
-                  {isAuthenticated && (
-                    <div className="profile-card-edit-icon">
-                      {svgs.editIcon("black")}
-                    </div>
-                  )}
-                  <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>FirstName</Form.Label>
+      <Row style={{ marginTop: "-1.5rem", position: "relative" }}>
+        <Col sm={12} className="text-left">
+          <div style={profileContainer}>
+            {loading ? (
+              <Loader />
+            ) : (
+              <div className="profile-card px-4">
+                {isAuthenticated && (
+                  <div
+                    className="profile-card-edit-icon"
+                    onClick={() => setEditing(true)}
+                  >
+                    {svgs.editIcon("black")}
+                  </div>
+                )}
+                <Form.Row>
+                  <Form.Group as={Col}>
+                    <Form.Label>First Name</Form.Label>
+                    {editing ? (
                       <Form.Control
                         type="text"
                         name="firstName"
                         value={profileEdit.firstName}
                         onChange={formValueChange}
                       />
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                      <Form.Label>LastName</Form.Label>
+                    ) : (
+                      <p className="profile-edit">{userProfile.firstName}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group as={Col}>
+                    <Form.Label>Last Name</Form.Label>
+                    {editing ? (
                       <Form.Control
                         type="text"
                         name="lastName"
                         value={profileEdit.lastName}
                         onChange={formValueChange}
                       />
-                    </Form.Group>
-                  </Form.Row>
+                    ) : (
+                      <p className="profile-edit">{userProfile.lastName}</p>
+                    )}
+                  </Form.Group>
+                </Form.Row>
 
-                  <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>Username</Form.Label>
+                <Form.Row>
+                  <Form.Group as={Col}>
+                    <Form.Label>Username</Form.Label>
+                    {editing ? (
                       <Form.Control
                         type="text"
                         name="username"
                         value={profileEdit.username}
                         onChange={formValueChange}
                       />
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                      <Form.Label>Email</Form.Label>
+                    ) : (
+                      <p className="profile-edit">{userProfile.username}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group as={Col}>
+                    <Form.Label>Email</Form.Label>
+                    {editing ? (
                       <Form.Control
                         type="text"
                         name="email"
                         value={profileEdit.email}
                         onChange={formValueChange}
                       />
-                    </Form.Group>
-                  </Form.Row>
-
+                    ) : (
+                      <p className="profile-edit">{userProfile.email}</p>
+                    )}
+                  </Form.Group>
+                </Form.Row>
+                {editing && (
                   <Form.Row>
-                    <Form.Group as={Col}>
-                      <Form.Label>Channel Name</Form.Label>
-                      <Form.Control type="text" />
-                    </Form.Group>
+                    <Button onClick={sendEditProfileRequest} variant="warning">
+                      Edit Changes
+                    </Button>
                   </Form.Row>
-                </div>
-              )}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </motion.div>
+                )}
+              </div>
+            )}
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

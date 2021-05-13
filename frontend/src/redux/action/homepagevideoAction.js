@@ -1,10 +1,10 @@
-import axios from "axios";
+import apiurl from "../../apiurl";
 import { toastrError } from "../../functions/toastrs";
 import types from "../types";
 
 export const getHomePageData = () => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/videos/homepageVid/`);
+    const { data } = await apiurl.get(`/api/videos/homepageVid/`);
     setTimeout(() => {
       dispatch({
         type: types.HOME_PAGE_DATA_SUCCESS,
@@ -25,12 +25,12 @@ export const getUserData = (token) => async (dispatch) => {
   };
 
   try {
-    const { data } = await axios.get("/api/videos/userdata/", config);
+    const { data } = await apiurl.get("/api/videos/userdata/", config);
     console.log(data);
     if (data.success) {
       dispatch({
         type: types.GET_USER_SUCCESS,
-        payload: data.profileInfo,
+        payload: data,
       });
       // uploadVideo(apiResponse, config);
     } else {
@@ -48,7 +48,7 @@ export const getUserData2 = (token) => async (dispatch) => {
   };
 
   try {
-    const { data } = await axios.get("/api/videos/userdata2/", config);
+    const { data } = await apiurl.get("/api/videos/userdata2/", config);
     console.log(data);
     if (data) {
       dispatch({

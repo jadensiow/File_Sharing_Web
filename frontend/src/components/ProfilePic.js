@@ -3,9 +3,11 @@ import svgs from "../img/icons/svgs";
 import defaultPic from "../img/defaultProfilePicture.jpg";
 
 const ProfilePic = ({ src, navbar, width, height, borderRadius }) => {
-	return src.length > 0 ? (
+	const imgSrc = src?.length > 0 ? src : defaultPic;
+
+	return imgSrc === src && !navbar ? (
 		<img
-			src={src}
+			src={imgSrc}
 			width={width}
 			height={height}
 			style={{
@@ -16,7 +18,15 @@ const ProfilePic = ({ src, navbar, width, height, borderRadius }) => {
 	) : navbar ? (
 		svgs.profileIcon
 	) : (
-		defaultPic
+		<img
+			src={imgSrc}
+			width={width}
+			height={height}
+			style={{
+				objectFit: "cover",
+				borderRadius
+			}}
+		/>
 	);
 };
 

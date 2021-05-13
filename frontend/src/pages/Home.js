@@ -14,9 +14,7 @@ import { homeRouteTransition } from "../functions/routeAnimation";
 const Home = () => {
   const { isAuthenticated, user, token } = useSelector((state) => state.auth);
   const { loading, channelInfo } = useSelector((state) => state.homepageInfo);
-  const subInfoSelector = useSelector((state) => state.subInfo);
-  const { userProfile } = useSelector((state) => state.userProfile);
-
+  const { subInfo } = useSelector((state) => state.subInfo);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +24,9 @@ const Home = () => {
     dispatch(getUserData(token));
     dispatch(getUserData2(token));
   }, []);
-
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
   return (
     <div>
       <motion.div
@@ -45,28 +45,33 @@ const Home = () => {
         {isAuthenticated ? (
           <Link to={`/${user.id}/channel`}>My Channel</Link>
         ) : null}
-        <br></br>
         <div className="row mt-3">
-          <div className="col-2">
-            {isAuthenticated ? <h3 className="row">Subscription</h3> : null}
-            {userProfile?.loading
-              ? null
-              : userProfile.subscribedTo.map((sub) => (
-                  <Link className="row" to={`/${sub}/channel`}>
-                    {sub}
+          <div className="col-3">
+            {isAuthenticated ? <h4>Subscription</h4> : null}
+            {isAuthenticated && subInfo?.subInfoChnl?.sub_chnl?.length > 0
+              ? subInfo.subInfoChnl.sub_chnl.map((sub) => (
+                  <Link
+                    className="row d-flex justify-content-center"
+                    to={`/${sub.id}/channel`}
+                  >
+                    {sub.channel_name}
                   </Link>
-                ))}
+                ))
+              : null}
 
-            <br></br>
-            <h3>Recommendation</h3>
-            {subInfoSelector?.loading
-              ? null
-              : subInfoSelector.subInfo.map((chnl) => (
-                  <Link className="row" to={`/${chnl.fields.user}/channel`}>
+            <h4>Recommendation</h4>
+            {subInfo?.subInfo?.length > 1
+              ? subInfo.subInfo.map((chnl) => (
+                  <Link
+                    className="row d-flex justify-content-center"
+                    to={`/${chnl.fields.user}/channel`}
+                  >
                     {chnl.fields.channel_name}
                   </Link>
-                ))}
+                ))
+              : null}
           </div>
+
           <div className="col-8">
             <div className="allVideos">
               {loading

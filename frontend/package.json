@@ -51,6 +51,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://18.136.106.220:8000/",
+  "proxy": "http://localhost:8000/",
   "secure": false
 }

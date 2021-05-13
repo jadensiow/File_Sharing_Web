@@ -14,14 +14,12 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { toastrError, toastrSuccess } from "../functions/toastrs";
-import axios from "axios";
+import apiurl from "../apiurl";
 
 const Comment = ({ comment }) => {
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [showEditDetailsModal, setShowEditDetailsModal] = useState(false);
   const [commentEdit, setCommentEdit] = useState(comment.comment);
-
-  // sorry for that
 
   const { token, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -57,7 +55,7 @@ const Comment = ({ comment }) => {
 
       console.log(commentEdit);
       try {
-        const { data } = await axios.put(
+        const { data } = await apiurl.put(
           `/api/videos/comments/${comment.id}/edit`,
           { newComment: commentEdit },
           config
@@ -76,7 +74,6 @@ const Comment = ({ comment }) => {
         // the backend is working, so you probably will need to fix
         // the dispatch ok
         console.log("err = ", err);
-        toastrError("Sorry");
       }
       setShowEditDetailsModal(false);
     } else toastrWarning(`You cannot edit other user's comment`);

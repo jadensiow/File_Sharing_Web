@@ -73,7 +73,9 @@ const Channel = ({ match }) => {
     position: "relative",
     padding: 0,
   };
-
+  useEffect(() => {
+    document.title = "Channel";
+  }, []);
   return (
     <div>
       <motion.div
@@ -102,7 +104,7 @@ const Channel = ({ match }) => {
               alignItems: "center",
             }}
           >
-            {loading && Number(match.params.id) === Number(user.id) ? (
+            {Object.keys(channelInfo).length === 0 ? (
               <div>
                 <h2>You do not have a channel</h2>
                 <p>Create a Channel</p>

@@ -2,7 +2,7 @@ import React from "react";
 import defaultPic from "../img/defaultChannelBanner.jpg";
 
 const ChannelBanner = ({ src, width, height, borderRadius, boxShadow }) => {
-	const imgSrc = src.length > 0 ? src : defaultPic;
+	const imgSrc = src?.length > 0 ? src : defaultPic;
 
 	return (
 		<img

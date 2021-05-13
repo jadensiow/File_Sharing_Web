@@ -143,3 +143,42 @@ def profile_pic_upload(request, *args, **kwargs):
             return send_message(False, "Sorry something went wrong while uploading the file")
 
         return send_message(True, "It might take some time for the change to show up")
+
+
+@login_required
+def edit_profile_info(request, **kwargs):
+    user = kwargs.get('user')
+    user_id = kwargs.get('userId')
+
+    if not user['id'] == user_id:
+        return send_message(False, "Token mismatch")
+
+    user_model = User.objects.filter(pk = user_id).first()
+
+    new_data = json.loads(request.body.decode())
+
+    new_username = new_data.get('username')
+    new_firstName = new_data.get('firstName')
+    new_lastName = new_data.get('lastName')
+    new_email = new_data.get('email')
+
+
+    if new_username != user_model.username:
+        user_model.username = new_username 
+
+    if new_email != user_model.email:
+        user_model.email = new_email 
+
+    if new_lastName != user_model.lastName:
+        user_model.lastName = new_lastName 
+
+    if new_firstName != user_model.firstName:
+        user_model.firstName = new_firstName 
+
+    user_model.save()
+
+    return HttpResponse(json.dumps({
+        "success": True,
+        "message": "Edited Successfully",
+        "profileInfo": user_model.get_dict()
+    }))
