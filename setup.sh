@@ -39,3 +39,12 @@ docker run -d -p 8000:8000 --env-file=./backend/.env file-sharing-backend
 npm install
 npm run build
 aws s3 sync ./frontend/build s3://file-sharing-webapp/
+
+
+he previously run the npm install and run build on the vscode. he didnt use the npm install on the file inside. the file is just used to host that is all
+
+uhhhh hahahahah. then what's the point of docker? we can just copy paste the build file? 
+so what he did was he go into the file sharing web he do a git pull. after the git pull he do all these
+stop the container just in case after that he build it back up 
+
+ohh hold on  a sec let me try something
