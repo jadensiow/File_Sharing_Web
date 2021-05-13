@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiThing from "../../youtube";
 
 import types from "../types";
 import {
@@ -8,53 +8,49 @@ import {
 } from "../../functions/toastrs";
 
 // Register User
-export const register = ({
-  firstName,
-  lastName,
-  username,
-  email,
-  password,
-}) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+export const register =
+  ({ firstName, lastName, username, email, password }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  const body = JSON.stringify({
-    firstName,
-    lastName,
-    username,
-    email,
-    password,
-  });
+    const body = JSON.stringify({
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+    });
 
-  try {
-    const res = await axios.post("/api/users/register/", body, config);
+    try {
+      const res = await apiThing.post("/api/users/register/", body, config);
 
-    if (res && res.data?.success) {
-      dispatch({
-        type: types.REGISTER_COMPLETE,
-        payload: res.data,
-      });
+      if (res && res.data?.success) {
+        dispatch({
+          type: types.REGISTER_COMPLETE,
+          payload: res.data,
+        });
 
-      toastrSuccess("Registration Successful", "");
-    } else if (res && !res.data?.success) {
-      toastrError("Registration Failed", res.data.message);
+        toastrSuccess("Registration Successful", "");
+      } else if (res && !res.data?.success) {
+        toastrError("Registration Failed", res.data.message);
+        dispatch({
+          type: types.REGISTER_FAIL,
+          payload: res.data.message,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      toastrError("Internal Server Error");
+
       dispatch({
         type: types.REGISTER_FAIL,
-        payload: res.data.message,
       });
     }
-  } catch (err) {
-    console.log(err);
-    toastrError("Internal Server Error");
-
-    dispatch({
-      type: types.REGISTER_FAIL,
-    });
-  }
-};
+  };
 
 // Login User
 export const login = (username, password) => async (dispatch) => {
@@ -67,7 +63,7 @@ export const login = (username, password) => async (dispatch) => {
   const body = JSON.stringify({ username, password });
 
   try {
-    const res = await axios.post("/api/users/login/", body, config);
+    const res = await apiThing.post("/api/users/login/", body, config);
     if (res.data) {
       if (res.data.success) {
         toastrSuccess("Logged in Successfuly");
