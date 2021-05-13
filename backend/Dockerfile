@@ -6,13 +6,6 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 
-RUN python -m venv new-env
-RUN ./new-env/Scripts/activate
-RUN python backend/manage.py makemigrations accounts
-RUN python backend/manage.py makemigrations videos
-RUN python backend/manage.py migrate videos
-RUN python backend/manage.py migrate accounts
-
 COPY . /code/
 
 EXPOSE 8000
