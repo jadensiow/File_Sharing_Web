@@ -4,14 +4,15 @@ WORKDIR /code
 
 # COPY <path-from> <path-to>
 COPY requirements.txt /code/
-
 RUN pip install -r requirements.txt
-CMD[("python", "-m", "venv ", "new-env");
-CMD[("./new-env/Scripts/activate");
-CMD[("python", "backend/manage.py", "makemigrations", "accounts");
-CMD[("python", "backend/manage.py", "makemigrations", "videos")];
-CMD[("python", "backend/manage.py", "migrate", "accounts")];
-CMD[("python", "backend/manage.py", "migrate", "videos")]
+
+RUN python -m venv new-env
+RUN ./new-env/Scripts/activate
+RUN python backend/manage.py makemigrations accounts
+RUN python backend/manage.py makemigrations videos
+RUN python backend/manage.py migrate videos
+RUN python backend/manage.py migrate accounts
+
 COPY . /code/
 
 EXPOSE 8000
