@@ -4,8 +4,9 @@ WORKDIR /code
 
 # COPY <path-from> <path-to>
 COPY requirements.txt /code/
-CMD[("python", "-m", "venv ", "new-env");
+
 RUN pip install -r requirements.txt
+CMD[("python", "-m", "venv ", "new-env");
 CMD[("./new-env/Scripts/activate");
 CMD[("python", "backend/manage.py", "makemigrations", "accounts");
 CMD[("python", "backend/manage.py", "makemigrations", "videos")];
