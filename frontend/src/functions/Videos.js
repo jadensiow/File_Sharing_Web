@@ -1,9 +1,10 @@
 import React from "react";
-// import Video1 from "../img/Video1.mp4";
+import Video1 from "../img/Video1.mp4";
 import Video2 from "../img/Video2.mp4";
+import Video3 from "../img/Video1.mp4";
 
 const Videos = () => {
-  let vid = [Video2];
+  let vid = [Video1, Video2, Video3];
   let videos = vid[Math.floor(Math.random() * vid.length)];
   return (
     <div>
