@@ -41,7 +41,7 @@ const SearchResults = ({ location }) => {
         })
         .then((resp) => {
           if (resp.data) {
-            console.log(resp.data);
+            //console.log(resp.data);
             setSearchResults(resp.data);
             setSearch({ searchFor, searchQuery });
           }

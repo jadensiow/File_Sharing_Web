@@ -43,7 +43,7 @@ export const register =
         });
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toastrError("Internal Server Error");
 
       dispatch({

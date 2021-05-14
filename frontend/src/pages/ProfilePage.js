@@ -85,10 +85,10 @@ const ProfilePage = ({ match }) => {
       formData.append("myFile", selectedFile, selectedFile.name);
 
       // Details of the uploaded file
-      console.log(selectedFile);
+      //console.log(selectedFile);
 
       for (let i of formData.entries()) {
-        console.log(i);
+        //console.log(i);
       }
 
       const config = {
@@ -107,7 +107,7 @@ const ProfilePage = ({ match }) => {
         );
 
         if (response.data.success) {
-          console.log(response.data);
+          //console.log(response.data);
           toastrSuccess("Profile Picture Changed", response.data.message);
         } else {
           toastrError("Error", response.data.message);
@@ -121,7 +121,7 @@ const ProfilePage = ({ match }) => {
   const formValueChange = (e) => {
     const name = e.target.name;
 
-    console.log(name);
+    //console.log(name);
 
     setProfileEdit((pe) => ({ ...pe, [name]: e.target.value }));
   };
@@ -140,7 +140,7 @@ const ProfilePage = ({ match }) => {
   };
 
   const sendEditProfileRequest = () => {
-    console.log(profileEdited());
+    //console.log(profileEdited());
     if (!profileEdited()) {
       toastrWarning("No edit done");
       return;

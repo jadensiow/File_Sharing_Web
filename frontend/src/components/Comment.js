@@ -23,7 +23,7 @@ const Comment = ({ comment }) => {
 
   const { token, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  // console.log(comment);
+  // //console.log(comment);
   const updateLikeDislike = async (likeOrDislike) => {
     if (user.id === comment.user.id) {
       toastrWarning(`You cannot ${likeOrDislike} your own Comment`);
@@ -34,7 +34,7 @@ const Comment = ({ comment }) => {
       likeDislikeAction(token, likeOrDislike, "comment", null, comment.id)
     );
   };
-  // console.log("test", commentEdit);
+  // //console.log("test", commentEdit);
 
   const deleteComment = () => {
     if (comment.user.id === user.id) {
@@ -53,14 +53,14 @@ const Comment = ({ comment }) => {
         },
       };
 
-      console.log(commentEdit);
+      //console.log(commentEdit);
       try {
         const { data } = await apiurl.put(
           `/api/videos/comments/${comment.id}/edit`,
           { newComment: commentEdit },
           config
         );
-        console.log(data);
+        //console.log(data);
         if (data.success) {
           toastrSuccess(data.message);
 
@@ -73,7 +73,7 @@ const Comment = ({ comment }) => {
         // possibly the dispatch
         // the backend is working, so you probably will need to fix
         // the dispatch ok
-        console.log("err = ", err);
+        //console.log("err = ", err);
       }
       setShowEditDetailsModal(false);
     } else toastrWarning(`You cannot edit other user's comment`);

@@ -1,7 +1,7 @@
 import json
 from django.http.response import HttpResponse
 import jwt
-from backend.config import Config
+from backend.backend.config import Config
 
 def get_s3_key_from_s3_url(video_s3_urls: list) -> list:
     if (

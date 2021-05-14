@@ -43,7 +43,7 @@ export const deleteCommentAction =
         `/api/videos/comments/${commentId}/`,
         config
       );
-      console.log(data);
+      //console.log(data);
 
       if (data.success) {
         toastrSuccess("Successfully deleted comment");
@@ -55,12 +55,12 @@ export const deleteCommentAction =
         toastrError("Error", data.message);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toastrError("Error", "There was some error deleteing the comment");
     }
   };
 export const editCommentAction = (comment) => (dispatch) => {
-  console.log("comment in action edit = ", comment);
+  //console.log("comment in action edit = ", comment);
   dispatch({
     type: types.COMMENT_EDITED,
     payload: comment,

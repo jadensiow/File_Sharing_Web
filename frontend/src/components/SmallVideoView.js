@@ -20,7 +20,6 @@ import ProfilePic from "./ProfilePic";
 
 const SmallVideoView = ({ video, match, showUser }) => {
   const { userProfile } = useSelector((state) => state.userProfile);
-
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [showEditDetailsModal, setShowEditDetailsModal] = useState(false);
   const { token } = useSelector((state) => state.auth);
@@ -72,7 +71,7 @@ const SmallVideoView = ({ video, match, showUser }) => {
         toastrError("Error", data.message);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
     setShowEditDetailsModal(false);
   };
@@ -111,7 +110,7 @@ const SmallVideoView = ({ video, match, showUser }) => {
         toastrError("Error", data.message);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
     setShowEditDetailsModal(false);
   };
@@ -146,8 +145,8 @@ const SmallVideoView = ({ video, match, showUser }) => {
               <Link to={`/${video.user.id}/channel`}>
                 <ProfilePic
                   src={
-                    userProfile?.profilePictureUrl?.length > 0
-                      ? userProfile?.profilePictureUrl
+                    video?.user?.profilePictureUrl?.length > 0
+                      ? video?.user?.profilePictureUrl
                       : defaultProfilePic
                   }
                 />

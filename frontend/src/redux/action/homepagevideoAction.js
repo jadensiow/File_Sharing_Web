@@ -12,9 +12,9 @@ export const getHomePageData = () => async (dispatch) => {
       });
     }, 1500);
 
-    console.log(data);
+    //console.log(data);
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
   }
 };
 export const getUserData = (token) => async (dispatch) => {
@@ -26,7 +26,7 @@ export const getUserData = (token) => async (dispatch) => {
 
   try {
     const { data } = await apiurl.get("/api/videos/userdata/", config);
-    console.log(data);
+    //console.log(data);
     if (data.success) {
       dispatch({
         type: types.GET_USER_SUCCESS,
@@ -49,7 +49,7 @@ export const getUserData2 = (token) => async (dispatch) => {
 
   try {
     const { data } = await apiurl.get("/api/videos/userdata2/", config);
-    console.log(data);
+    //console.log(data);
     if (data) {
       dispatch({
         type: types.GET_USER_SUCCESS2,

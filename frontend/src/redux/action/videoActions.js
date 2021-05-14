@@ -21,7 +21,7 @@ export const fetchVideoById = (videoId, userId) => async (dispatch) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     toastrError("Error", "Something went wrong trying to fetch the video");
   }
 };

@@ -12,9 +12,9 @@ export const getChannelData = (userId) => async (dispatch) => {
       });
     }, 1500);
 
-    console.log(data);
+    //console.log(data);
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
   }
 };
 
@@ -41,7 +41,7 @@ export const deleteVideoAction = (token, videoId) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 
@@ -63,7 +63,7 @@ export const addSubCount = (token, channelInfo) => async (dispatch) => {
       {},
       config
     );
-    console.log(data);
+    //console.log(data);
     if (data.success) {
       dispatch({
         type: types.ADD_SUB_SUCCESS,
@@ -73,7 +73,7 @@ export const addSubCount = (token, channelInfo) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 export const minusSubCount = (token, channelInfo) => async (dispatch) => {
@@ -88,7 +88,7 @@ export const minusSubCount = (token, channelInfo) => async (dispatch) => {
       {},
       config
     );
-    console.log(data);
+    //console.log(data);
     if (data.success) {
       dispatch({
         type: types.MINUS_SUB_SUCCESS,
@@ -98,7 +98,7 @@ export const minusSubCount = (token, channelInfo) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 export const addViews = (token, video) => async (dispatch) => {
@@ -121,6 +121,6 @@ export const addViews = (token, video) => async (dispatch) => {
     } else {
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };

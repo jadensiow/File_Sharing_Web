@@ -1,5 +1,5 @@
 import boto3
-from backend.config import Config
+from backend.backend.config import Config
 
 def delete_from_s3(object_keys: list) -> bool:
     if (

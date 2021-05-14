@@ -17,7 +17,7 @@ const ModalCustom = ({ showModal, setShowModal }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(chnlName);
+    //console.log(chnlName);
     setShowModal(false);
     const config = {
       headers: {
@@ -30,8 +30,8 @@ const ModalCustom = ({ showModal, setShowModal }) => {
     });
     try {
       const res = await apiurl.post("/api/videos/channel/", body, config);
-      console.log("res", res);
-      console.log("testing");
+      //console.log("res", res);
+      //console.log("testing");
       if (res.data) {
         toastrSuccess("Channel created");
         history.push(`/home`);

@@ -64,7 +64,7 @@ export const watchVideoReducer = (state = {}, action) => {
       } = action.payload;
 
       let newComments = state.comments.map((sComment) => {
-        console.log("id = ", id, "commentId = ", sComment.id);
+        //console.log("id = ", id, "commentId = ", sComment.id);
         if (sComment.id === id) {
           const newC = { ...sComment };
 
@@ -88,7 +88,7 @@ export const watchVideoReducer = (state = {}, action) => {
         c.id === action.payload.id ? action.payload : c
       );
 
-      console.log("new comments = ", newComments);
+      //console.log("new comments = ", newComments);
 
       return {
         ...state,

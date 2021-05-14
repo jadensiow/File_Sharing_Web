@@ -28,7 +28,7 @@ const Channel = ({ match }) => {
   const { userProfile } = useSelector((state) => state.userProfile);
 
   const { loading, channelInfo } = useSelector((state) => state.channelInfo);
-
+  const channelData = useSelector((state) => state.homepageInfo);
   let changeColor;
   const videoContainer = useRef(null);
 
@@ -38,8 +38,8 @@ const Channel = ({ match }) => {
   const handleClick = () => {
     history.push(`/${user.id}/channel/uploadvideo`);
   };
-  console.log(channelInfo);
-  console.log(userProfile);
+  //console.log(channelInfo);
+  //console.log(userProfile);
   const favouriteChnl = () => {
     if (channelInfo.user_id === user.id) {
       toastrWarning(`You cannot favourite your own video`);
@@ -60,7 +60,7 @@ const Channel = ({ match }) => {
     ? (changeColor = "red")
     : (changeColor = "grey");
   useEffect(() => {
-    console.log(videoContainer);
+    //console.log(videoContainer);
   }, [videoContainer.current]);
 
   useEffect(() => {
@@ -166,7 +166,7 @@ const Channel = ({ match }) => {
           {loading ? (
             <Loader />
           ) : (
-            channelInfo.videos.map((video) => {
+            channelInfo?.videos.map((video) => {
               return <SmallVideoView video={video} key={video.id} />;
             })
           )}

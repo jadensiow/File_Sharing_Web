@@ -27,13 +27,13 @@ const UploadVideo = ({ match }) => {
     document.title = "Upload";
   }, []);
 
-  console.log(channelInfo);
+  //console.log(channelInfo);
   const history = useHistory();
 
   const handleChangeTitle = (event) => {
     setTitle(event.currentTarget.value);
   };
-  console.log(Object.keys(channelInfo).length === 0);
+  //console.log(Object.keys(channelInfo).length === 0);
   const handleChangeDecsription = (event) => {
     setDescription(event.currentTarget.value);
   };
@@ -44,7 +44,7 @@ const UploadVideo = ({ match }) => {
     return <Redirect to={`/${user.id}/channel/`} />;
   }
   const uploadVideo = async (apiResponse, config) => {
-    console.log("data = ", apiResponse);
+    //console.log("data = ", apiResponse);
 
     const videoId = apiResponse.data.videoId;
 
@@ -68,10 +68,10 @@ const UploadVideo = ({ match }) => {
         formDataVid,
         config
       );
-      console.log(response);
+      //console.log(response);
 
       if (response.data.success) {
-        console.log(response.data);
+        //console.log(response.data);
         toastrSuccess("Video Uploaded", response.data.message);
         history.push(`/${user.id}/channel/`);
       } else {
@@ -117,7 +117,7 @@ const UploadVideo = ({ match }) => {
 
   const uploadVidFile = (files) => {
     setAttachVid(files);
-    console.log(attachVid);
+    //console.log(attachVid);
   };
 
   const uploadThumbnailFile = (files) => {

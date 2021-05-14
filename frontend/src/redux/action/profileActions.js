@@ -13,7 +13,7 @@ export const getProfileData = (userId) => async (dispatch) => {
       });
     }, 1500);
   } catch (err) {
-    console.log(err.message);
+    //console.log(err.message);
     toastrError("Error", "Something went wrong");
   }
 };
@@ -31,7 +31,7 @@ export const editProfileAction =
         newInfo,
         config
       );
-      console.log(data);
+      //console.log(data);
       if (data.success) {
         toastrSuccess("Profile edit success");
         dispatch({
@@ -42,7 +42,7 @@ export const editProfileAction =
         toastrError("Error", data.message);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 
@@ -58,7 +58,7 @@ export const favouriteChannel = (token, channelInfo) => async (dispatch) => {
       {},
       config
     );
-    console.log(data);
+    //console.log(data);
     if (data.success) {
       toastrSuccess("Favourite success");
       dispatch({
@@ -69,7 +69,7 @@ export const favouriteChannel = (token, channelInfo) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 export const unfavouriteChannel = (token, channelInfo) => async (dispatch) => {
@@ -83,7 +83,7 @@ export const unfavouriteChannel = (token, channelInfo) => async (dispatch) => {
       `/api/videos/subscribe/${channelInfo.user_id}/delete/`,
       config
     );
-    console.log(data);
+    //console.log(data);
     if (data.success) {
       toastrSuccess("Unfavourite success");
       dispatch({
@@ -94,6 +94,6 @@ export const unfavouriteChannel = (token, channelInfo) => async (dispatch) => {
       toastrError("Error", data.message);
     }
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };

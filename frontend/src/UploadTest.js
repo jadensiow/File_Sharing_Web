@@ -25,10 +25,10 @@ const UploadTest = ({ match }) => {
     formData.append("myFile", selectedFile, selectedFile.name);
 
     // Details of the uploaded file
-    console.log(selectedFile);
+    //console.log(selectedFile);
 
     for (let i of formData.entries()) {
-      console.log(i);
+      //console.log(i);
     }
 
     const config = {
@@ -47,7 +47,7 @@ const UploadTest = ({ match }) => {
       );
 
       if (response.data) {
-        console.log(response.data);
+        //console.log(response.data);
         setUrl(response.data.url);
         toastrSuccess("Yay", response.data.message);
       }

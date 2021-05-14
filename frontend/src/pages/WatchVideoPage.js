@@ -19,7 +19,7 @@ const WatchVideoPage = ({ match }) => {
   const dispatch = useDispatch();
   const { isAuthenticated, token, user } = useSelector((state) => state.auth);
   const { loading, video, comments } = useSelector((state) => state.watchVideo);
-  console.log(video);
+  //console.log(video);
 
   // video.viewers.includes(user.id) ? null : dispatch(addViews(token, video));
   useEffect(() => {

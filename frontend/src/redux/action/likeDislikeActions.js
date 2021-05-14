@@ -5,7 +5,7 @@ import types from "../types";
 export const likeDislikeAction =
   (token, likeOrDislike, videoOrComment, videoId = null, commentId = null) =>
   async (dispatch) => {
-    console.log("like action is called ");
+    //console.log("like action is called ");
 
     let url = "";
 
@@ -46,11 +46,11 @@ export const likeDislikeAction =
           payload: { id, ...data },
         };
 
-        console.log("actin = ", action);
+        //console.log("actin = ", action);
 
         dispatch(action);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
