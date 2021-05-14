@@ -19,7 +19,7 @@
 // };
 export const mainRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300vw",
   },
 
   show: {
@@ -30,7 +30,7 @@ export const mainRouteTransition = {
   },
 
   exit: {
-    x: "-100vw",
+    x: "-300vw",
     transition: {
       duration: 1.5,
     },
@@ -45,40 +45,40 @@ export const registerRouteTransition = {
   show: {
     x: 0,
     transition: {
-      duration: 2,
+      duration: 3,
     },
   },
 
   exit: {
-    x: "-100vw",
+    x: "-300vw",
     transition: {
-      duration: 1.5,
+      duration: 2.4,
     },
   },
 };
 export const loginRouteTransition = {
   hidden: {
-    x: "-100vw",
+    x: "-300vw",
   },
 
   show: {
     x: 0,
     transition: {
-      duration: 2,
+      duration: 2.4,
     },
   },
 
   exit: {
-    x: "100vw",
+    x: "300vw",
     transition: {
-      duration: 1.5,
+      duration: 2.4,
     },
   },
 };
 
 export const homeRouteTransition = {
   hidden: {
-    x: "-100vw",
+    x: "-300vw",
   },
 
   show: {
@@ -89,36 +89,36 @@ export const homeRouteTransition = {
   },
 
   exit: {
-    x: "-100vw",
+    x: "-300vw",
     transition: {
-      duration: 1.5,
+      duration: 2.4,
     },
   },
 };
 
 export const channelRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300vw",
   },
 
   show: {
     x: 0,
     transition: {
-      duration: 2,
+      duration: 2.4,
     },
   },
 
   exit: {
-    y: "+100vw",
+    y: "+300vw",
     transition: {
-      duration: 1.5,
+      duration: 3,
     },
   },
 };
 
 export const watchVideoRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300",
   },
 
   show: {
@@ -129,55 +129,55 @@ export const watchVideoRouteTransition = {
   },
 
   exit: {
-    y: "+100vw",
+    y: "+300",
     transition: {
-      duration: 1.5,
+      duration: 3,
     },
   },
 };
 
 export const uploadVidRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300",
   },
 
   show: {
     x: 0,
     transition: {
-      duration: 2,
+      duration: 3,
     },
   },
 
   exit: {
-    y: "+100vw",
+    y: "+300",
     transition: {
-      duration: 1.5,
+      duration: 2.4,
     },
   },
 };
 export const profileRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300",
   },
 
   show: {
     x: 0,
     transition: {
-      duration: 2,
+      duration: 2.8,
     },
   },
 
   exit: {
-    x: "-100vw",
+    x: "-300",
     transition: {
-      duration: 1.5,
+      duration: 2.4,
     },
   },
 };
 
 export const searchRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300",
   },
 
   show: {
@@ -188,9 +188,9 @@ export const searchRouteTransition = {
   },
 
   exit: {
-    x: "-100vw",
+    x: "-300",
     transition: {
-      duration: 1.5,
+      duration: 2.4,
     },
   },
 };
