@@ -28,9 +28,11 @@ docker stop <container-id>
 # this is to run the Dockerfile 
 docker build -t file-sharing-backend ./backend
 docker run -d -p 8000:8000 --env-file=./backend/.env file-sharing-backend
+# to debug can run => docker run -p 8000:8000 --env-file=./backend/.env file-sharing-backend
+#without the -d to see error
 
 
-# To purge all docker image and restart over --> Docker system prune-a
+# To purge all docker image and restart over --> Docker system prune -a
 # docker logs <container name> to check if docker start and stop
 # docker pps -a to check if container start and stop immediately due to error 
 

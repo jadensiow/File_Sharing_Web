@@ -1,19 +1,19 @@
 from django.db.models.query_utils import Q
-from backend.backend.helpers.delete import delete_from_s3
+from backend.helpers.delete import delete_from_s3
 from django.urls import conf
-from backend.backend.config import Config
+from backend.config import Config
 from django.http import HttpResponse
 from django.core import serializers
 import random
-from backend.backend.helpers.upload import upload_file
+from backend.helpers.upload import upload_file
 import random
 import json
 from accounts.models import User
 
-from backend.backend.utils import get_s3_key_from_s3_url, login_required, send_message
+from backend.utils import get_s3_key_from_s3_url, login_required, send_message
 from .models import Comment, Video, Channel
 
-from backend.backend.helpers.upload import upload_file
+from backend.helpers.upload import upload_file
 
 # from .scripts import dummyData
 

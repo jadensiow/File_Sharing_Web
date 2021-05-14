@@ -1,5 +1,5 @@
 import boto3
-from backend.backend.config import Config
+from backend.config import Config
 from uuid import uuid4
 
 def upload_file(file_to_upload, username: str) -> str:

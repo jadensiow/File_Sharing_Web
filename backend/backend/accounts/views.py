@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import User
-from backend.backend.helpers.upload import upload_file
-from backend.backend.utils import login_required, send_message
+from backend.helpers.upload import upload_file
+from backend.utils import login_required, send_message
 from django.core import serializers
 from django.http import HttpResponse
 
@@ -9,7 +9,7 @@ import jwt
 import bcrypt
 
 from .models import User
-from backend.backend.config import Config
+from backend.config import Config
 
 # json.dumps = JSON.stringify
 # json.loads = JSON.parse
