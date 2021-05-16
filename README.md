@@ -28,6 +28,8 @@ Firstly, run npm install on the frontend
 npm install
 ```
 
+Secondly, inside frontend > src > apiurl, change the api according to your server
+
 Next, create a config.py file inside the backend root folder and type in the following
 
 ```

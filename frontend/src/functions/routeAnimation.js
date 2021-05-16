@@ -39,7 +39,7 @@ export const mainRouteTransition = {
 
 export const registerRouteTransition = {
   hidden: {
-    x: "+100vw",
+    x: "+300vw",
   },
 
   show: {
