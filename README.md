@@ -1,5 +1,7 @@
 # Project_Planner_App
 
+http://file-sharing-webapp.s3-website-ap-southeast-1.amazonaws.com/
+
 ## Description
 
 To have a server to record and share precious memories with others. Users are able to post the stories of their lives and store them in their account. The videos are stored on the server and other users can access to see what are being shared.
