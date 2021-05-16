@@ -28,7 +28,7 @@ Firstly, run npm install on the frontend
 npm install
 ```
 
-Next, create a config.py file inside backend place in the following
+Next, create a config.py file inside the backend root folder and type in the following
 
 ```
 import os
@@ -45,3 +45,11 @@ class Config:
     AWS_DEFUALT_ACL = None
     DEFAULT_FILE_STORAGE = <Storage name>
 ```
+
+Run
+
+```
+pip install -r requirements.txt
+```
+
+Start the backend in the virtual environment while the front end with npm start
