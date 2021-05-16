@@ -13,7 +13,7 @@ sudo chmod 666 /var/run/docker.sock
 # Update local github repository
 ssh -i <path-to-key> ubuntu@<ip-address>
 # IP will change if ec2 instances stop and start again
-# eg ssh -i ./myec2instance-key-pair.pem ubuntu@ec2-18-136-106-220.ap-southeast-1.compute.amazonaws.com
+# eg ssh -i ./myec2instance-key-pair.pem ubuntu@ec2-54-169-100-12.ap-southeast-1.compute.amazonaws.com
 cd File_Sharing_Web
 git pull
 
