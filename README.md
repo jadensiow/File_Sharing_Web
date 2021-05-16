@@ -7,7 +7,7 @@ To have a server to record and share precious memories with others. Users are ab
 ### Features
 
 - Users are able to upload their videos and images into their own accounts. The uploaded videos can be edited and deleted after posting
-<img src="https://media.giphy.com/media/EErCCKnRoD0rk5PxcE/giphy.gif" width="1000px">
+<img src="https://media.giphy.com/media/EErCCKnRoD0rk5PxcE/giphy.gif" width="800px">
 
 - Users can like and comment on other users videos. Users can also edit and delete their own post
 ![Animation10](https://user-images.githubusercontent.com/78722564/118406852-5b77a880-b6b0-11eb-8cc1-74a22321e7e4.gif)
